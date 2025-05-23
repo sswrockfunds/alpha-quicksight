@@ -1,5 +1,6 @@
 ## [Unreleased]
 ### Added
+- Added `quicksight.intraday_top_instruments`
 - Added user scripts to `database/user`
   - scripts
     - `create_users.sql`

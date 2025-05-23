@@ -11,7 +11,7 @@ Log::setLogLevel(LogLevel::DEBUG);
 
 // Script Definition
 $fileMap = [
-    "test" => "_test.sql",
+    "top" => "intraday/refresh_intraday_top_instruments.sql",
 ];
 
 // Get the Script to run

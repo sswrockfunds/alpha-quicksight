@@ -1,5 +1,21 @@
 # AlphaQuickSight 0.1.0
 
+## Provided Data
+
+### Intraday
+#### metrics
+- tpl1, tpl60, tpl300
+- turnover_usd
+- pnl
+#### dimensions
+- exchange
+- time (7day avg, hour)
+#### views
+- `quicksight.intraday_total`
+- `quicksight.intraday_by_exchange`
+- `quicksight.intraday_current_hour`
+- `quicksight.intraday_top_instruments`
+
 ## Dependencies
 The QuickSight data depends heavily on other scripts and processes to gather and prepare data.
 A full documentation of dependencies should guarantee maintainability and stability.
@@ -7,6 +23,7 @@ A full documentation of dependencies should guarantee maintainability and stabil
 ### CryptoStruct Schema
 #### Tables
 - `cryptostruct.instruments`
+- cryptostruct.instruments_stats_daily
 #### Process
 - `monkey-bi` InstrumentImport
 
