@@ -12,25 +12,33 @@ Log::setLogLevel(LogLevel::DEBUG);
 // Script Definition
 $fileMap = [
     "top" => "intraday/refresh_intraday_top_instruments.sql",
+    "intraday" => "intraday/refresh_intraday.sql",
+    "intradayExchange" => "intraday/refresh_intraday_by_exchange.sql",
+    "tradingdata" => "data/generate_tradingdata_by_min.sql",
 ];
 
 // Get the Script to run
 $availableScripts = json_encode($fileMap, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
 $job = $argv[1] ?? 'empty';
-if ($job === 'empty' ) {
+if ($job === 'empty') {
     Log::error("SQL script must be set. Available commands: \n{$availableScripts}");
     exit;
 }
-if (!array_key_exists($job, $fileMap)) {
-    Log::error("'$job' is no valid SQL script. Available commands: \n{$availableScripts}");
-    exit;
-}
-$sql = file_get_contents(__DIR__ . "/../sql/" . $fileMap[$job]);
+
+foreach (array_slice($argv, 1) as $job) {
+    print "\n\n";
+    if (!array_key_exists($job, $fileMap)) {
+        Log::error("'$job' is no valid SQL script. Available commands:");
+        continue;
+    }
+    $sql = file_get_contents(__DIR__ . "/../sql/" . $fileMap[$job]);
 
 // Run the script
-Log::info("Executing SQL script: {$fileMap[$job]}");
-$result = MonkeyCluster::query($sql);
-$queryTimeSec = round($result->getTime(), 3);
-$rowCount = $result->getRowCount();
+    Log::info("Executing SQL script: {$fileMap[$job]}");
+    $result = MonkeyCluster::query($sql);
+    $queryTimeSec = round($result->getTime(), 3);
+    $rowCount = $result->getRowCount();
 
-Log::info("$rowCount rows affected / $queryTimeSec sec");
+    Log::info("$rowCount rows affected / $queryTimeSec sec");
+}
+

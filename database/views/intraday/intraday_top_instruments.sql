@@ -1,4 +1,4 @@
-DROP VIEW quicksight.intraday_top_instruments;
+DROP MATERIALIZED VIEW quicksight.intraday_top_instruments;
 CREATE MATERIALIZED VIEW quicksight.intraday_top_instruments AS
 
 WITH

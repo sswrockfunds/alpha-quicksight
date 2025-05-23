@@ -1,4 +1,4 @@
-DROP VIEW quicksight.intraday;
+DROP MATERIALIZED VIEW quicksight.intraday;
 CREATE MATERIALIZED VIEW quicksight.intraday AS
 
 WITH base AS (
