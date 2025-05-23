@@ -1,0 +1,12 @@
+*.conf export-ignore
+*.md export-ignore
+*.sh export-ignore
+*.xml export-ignore
+*.cache export-ignore
+
+.git* export-ignore
+.bashrc export-ignore
+.editorconfig export-ignore
+
+*.lock export-ignore
+tests export-ignore

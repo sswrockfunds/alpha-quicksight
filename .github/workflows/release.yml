@@ -1,0 +1,121 @@
+name: Release Commit
+
+on:
+    release:
+        types: [ created ]
+
+jobs:
+    releaseJob:
+        name: Generate Release Commit
+        runs-on: ubuntu-latest
+        env:
+            # https://docs.github.com/en/actions/learn-github-actions/contexts#github-context
+            # https://stackoverflow.com/questions/63468238/how-to-get-target-branch-in-github-actions-on-release
+            BRANCH: ${{ github.event.release.target_commitish }}
+            VERSION: ${{ github.ref_name }}
+            USER: AlphaRock ReleaseBot
+            EMAIL: <noreply@sswrockfunds.com>
+            BUILD: $(date -u +'%Y-%m-%d %H:%M UTC')
+
+        steps:
+
+            -   name: Checkout the branch
+                uses: actions/checkout@v3
+                with:
+                    ref: ${{ env.BRANCH }}
+
+            -   name: Conditionally get latest tag
+                run: |
+                    if [[ -z "$VERSION" ]]; then
+                      echo "VERSION=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
+                    fi
+
+            -   name: Set Placeholders in README
+                run: |
+                    sed -i "s/# AlphaQuickSight.*/# AlphaQuickSight ${{ env.VERSION }}/" README.md
+                    # sed -i 's/\(ALPHA_QUICKSIGHT_VERSION = "\)[^"]*/\1'"${{ env.VERSION }}"'/' src/env.php
+                    # sed -i 's/\(ALPHA_QUICKSIGHT_RELEASE_TS = "\)[^"]*/\1'"${{ env.BUILD }}"'/' src/env.php
+
+            -   name: Set Placeholders in CHANGELOG
+                run: |
+                    # Remove empty headlines
+                    awk 'BEGIN {
+                         hold=""; buf=""; print_flag=0; first_block=0; preamble=1
+                    }
+
+                    /^# / { if (preamble) { print; next } }
+                    /^## / {
+                        preamble=0;
+                        first_block++;
+                        if(first_block > 2) {  print; next }
+                        if(first_block == 2) {  printf "\n"; print; next }
+                        if(first_block == 1) {  print; next }
+                    }
+                    /^### / && first_block == 1 {
+                        if (print_flag) {
+                            printf "%s", buf;
+                        }
+                        buf = "";
+                        hold = $0 "\n";
+                        print_flag = 0;
+                        next;
+                    }
+                    NF > 0 && first_block == 1 {
+                        print_flag = 1;
+                    } first_block == 1 {
+                        buf = buf hold $0 "\n";
+                        hold = "";
+                    } first_block > 1 {
+                        print
+                    }
+
+                    END {
+                        if (print_flag && first_block == 1) {
+                            printf "%s", buf;
+                        }
+                    }' CHANGELOG.md > tmp.md && mv tmp.md CHANGELOG.md
+
+                    sed -i "s/\[Unreleased\].*/\[${{ env.VERSION }}\] - ${{ env.BUILD }}/" CHANGELOG.md
+
+            -   name: Set Placeholders in Release Description
+                run: |
+                    cat > body.md <<- BODY
+                    ${{ github.event.release.body }}
+                    BODY
+                    awk '/^## What/{flag=1} flag {print}' body.md > temp.body.md && mv temp.body.md body.md
+
+                    CURRENT_BODY=$(cat body.md)
+                    echo $CURRENT_BODY
+                    rm body.md
+
+                    BODY=$(awk -v version="$VERSION" '/^## \['$VERSION'\]/{flag=1; print; next} /^## \[/{flag=0} flag {print}' CHANGELOG.md)
+                    printf "RELEASE_BODY<<EOF\n%s\n\n%s\nEOF\n" "$BODY" "$CURRENT_BODY" >> $GITHUB_ENV
+
+                    sed -i "s/\[$VERSION\].*/\[${{ env.VERSION }}\] - ${{ env.BUILD }}/" CHANGELOG.md
+                    awk '/## \['${{ env.VERSION }}'\]/ { print "## [Unreleased]\n### Added\n### Changed\n### Fixed\n### Removed\n### -\n\n"; print $0; next }1' CHANGELOG.md > tmp && mv tmp CHANGELOG.md
+
+            -   name: Commit File Changes
+                run: |
+                    # Config git user
+                    git config user.name "$USER"
+                    git config user.email "$EMAIL"
+
+                    # Release Commit
+                    git add .
+                    git commit -m "ReleaseCommit ${{ env.VERSION }}"
+                    git push
+
+            -   name: Move Release Tag to Release Commit
+                run: |
+                    git tag -fa ${{ env.VERSION }} -m "Moved ReleaseTag ${{ env.VERSION }} to generated ReleaseCommit"
+                    git push -f --tags
+
+            -   name: Edit Release Metadata
+                uses: irongut/EditRelease@v1.2.0
+                with:
+                    token: ${{ secrets.GITHUB_TOKEN }}
+                    id: ${{ github.event.release.id }}
+                    replacename: true
+                    name: ${{ env.VERSION }}
+                    replacebody: true
+                    body: ${{ env.RELEASE_BODY }}

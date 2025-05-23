@@ -1,0 +1,9 @@
+/alpha.json
+/.env
+
+/vendor/
+/tmp/
+/.idea/
+/.log/
+*.cache
+*.log
