@@ -7,6 +7,7 @@
   - users
     - `quicksight_admin` can write within the quicksight schema
     - `quicksight_connect` can only read and should be used for setting up the Datasets within QuickSight
+- Added `database/permission.sql` that defines all permissions
 ### Changed
 ### Fixed
 ### Removed
