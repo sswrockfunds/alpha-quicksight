@@ -1,0 +1,30 @@
+{
+    "name": "sswrockfunds/alpha-quicksight",
+    "description": "AlphaRock QuickSight Scripts",
+    "license": "proprietary",
+    "type": "library",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "AlphaRock\\Alpha\\QuickSight\\": "src/"
+        }
+    },
+    "repositories": [
+        { "type": "git", "url": "git@github.com:sswrockfunds/core.git" }
+    ],
+    "minimum-stability": "beta",
+    "require": {
+        "php": "^8.4",
+        "sswrockfunds/core": "^0.13"
+    },
+    "scripts": {
+        "core": "rsync -azvch --group \"$HOME/git/core/php/src\" \"$HOME/git/alpha-quicksight/vendor/sswrockfunds/core/php\"",
+        "fix": "vendor/bin/phpcbf --standard=PSR12 src",
+        "check": "vendor/bin/phpcs --standard=PSR12 -s --colors --exclude=Generic.Files.LineLength src",
+        "stan": "vendor/bin/phpstan analyze --level 9 php/src"
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^3.10",
+        "phpstan/phpstan": "^1.11"
+    }
+}
