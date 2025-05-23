@@ -1,5 +1,16 @@
 # AlphaQuickSight 0.1.0
 
+## Dependencies
+The QuickSight data depends heavily on other scripts and processes to gather and prepare data.
+A full documentation of dependencies should guarantee maintainability and stability.
+
+### CryptoStruct Schema
+#### Tables
+- `cryptostruct.instruments`
+#### Process
+- `monkey-bi` InstrumentImport
+
+
 ## Setup
 
 ### Access
@@ -10,10 +21,12 @@
 ### Datasets
 - All Datasets refer to a table or view with the same name in the Postgres cluster
 - All Datasets are setup in a Shared Folder
-  - Lukas Märkl and Marco Scholz have Owner permission to the Datasets
+  - `Lukas Märkl` and `Marco Scholz` have Owner permission to the Datasets
 
 ### Postgres Cluster
-- QuickSight has a separate Username for the PostgresCluster
-- Permissions
-  - Read all tables
-  - Only write within Schema `quicksight.*`
+- Cluster URL: `quant.cluster-cm3hezyaasbb.eu-west-2.rds.amazonaws.com`
+  - No issue with changing IPs !!!
+- QuickSight has a separate Usernames for the PostgresCluster
+  - `quicksight_admin` to generate data within the `quicksight`schema
+  - `quicksight_connect` to only read data
+  - Separate users allow to better control permissions and usage
