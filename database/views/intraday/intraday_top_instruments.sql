@@ -36,6 +36,7 @@ SELECT t.trading_day,
        CURRENT_TIMESTAMP as updated_ts
   FROM top20_instruments t
   JOIN cryptostruct.instruments i ON t.instrument_id=i.instrument_id
-  LEFT JOIN cryptostruct.instruments_stats_daily s ON t.trading_day=s.day AND t.instrument_id=s.instrument_id;
+  LEFT JOIN cryptostruct.instruments_stats_daily s ON t.trading_day=s.day AND t.instrument_id=s.instrument_id
+ORDER BY s.turnover_value_usd desc;
 
 CREATE UNIQUE INDEX ON quicksight.intraday_top_instruments (instrument_id);

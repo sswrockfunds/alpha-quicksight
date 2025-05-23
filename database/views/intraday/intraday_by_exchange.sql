@@ -83,4 +83,4 @@ final_data AS (
 SELECT * FROM final_data
 ORDER BY exchange_id, market, time_of_day;
 
-CREATE UNIQUE INDEX intraday_by_exchange_time_idx ON quicksight.intraday_by_exchange (time_of_day, exchange_id, market);
+CREATE UNIQUE INDEX intraday_by_exchange_time_idx ON quicksight.intraday_by_exchange (exchange_id, market, time_of_day);
