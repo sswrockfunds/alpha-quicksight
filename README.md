@@ -1,5 +1,16 @@
 # AlphaQuickSight 0.1.0
 
+## Dependencies
+The QuickSight data depends heavily on other scripts and processes to gather and prepare data.
+A full documentation of dependencies should guarantee maintainability and stability.
+
+### CryptoStruct Schema
+#### Tables
+- `cryptostruct.instruments`
+#### Process
+- `monkey-bi` InstrumentImport
+
+
 ## Setup
 
 ### Access
