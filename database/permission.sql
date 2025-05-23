@@ -20,3 +20,6 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA cryptostruct GRANT SELECT ON TABLES TO quicks
 GRANT USAGE ON SCHEMA alpha TO quicksight_readonly;
 GRANT SELECT ON ALL TABLES IN SCHEMA alpha TO quicksight_readonly;
 ALTER DEFAULT PRIVILEGES IN SCHEMA alpha GRANT SELECT ON TABLES TO quicksight_readonly;
+
+-- Permissions for views
+GRANT SELECT ON quicksight.intraday_top_instruments TO quicksight_readonly;
