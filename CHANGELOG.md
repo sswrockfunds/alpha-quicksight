@@ -1,5 +1,12 @@
 ## [Unreleased]
 ### Added
+- Added user scripts to `database/user`
+  - scripts
+    - `create_users.sql`
+    - `change_passwords.sql`
+  - users
+    - `quicksight_admin` can write within the quicksight schema
+    - `quicksight_connect` can only read and should be used for setting up the Datasets within QuickSight
 ### Changed
 ### Fixed
 ### Removed
