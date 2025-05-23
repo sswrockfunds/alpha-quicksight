@@ -1,4 +1,4 @@
-# AlphaQuickSight
+# AlphaQuickSight 0.1.0
 
 ## Setup
 

@@ -1,5 +1,13 @@
 ## [Unreleased]
 ### Added
+### Changed
+### Fixed
+### Removed
+### -
+
+
+## [0.1.0] - 2025-05-23 09:45 UTC
+### Added
 - Release Workflow
 - Initial folder Structure
 - `composer.json`
@@ -7,9 +15,6 @@
 - `.gitignore`
 - `.gitattributes`
 - `.editorconfig`
-### Changed
-### Fixed
-### Removed
 ### -
 
 # Changelog
