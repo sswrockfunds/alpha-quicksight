@@ -41,5 +41,16 @@ with script_input as(
 
 
 INSERT INTO quicksight._tradingdata
-SELECT * FROM insert_data
-    ON CONFLICT (trading_minute, account_id) DO NOTHING;
+        SELECT * FROM insert_data
+ON CONFLICT (trading_minute, account_id)
+DO UPDATE SET
+    turnover_usd = EXCLUDED.turnover_usd,
+    tpl1_usd = EXCLUDED.tpl1_usd,
+    tpl10_usd = EXCLUDED.tpl10_usd,
+    tpl30_usd = EXCLUDED.tpl30_usd,
+    tpl60_usd = EXCLUDED.tpl60_usd,
+    tpl300_usd = EXCLUDED.tpl300_usd,
+    tpl900_usd = EXCLUDED.tpl900_usd,
+    trade_count = EXCLUDED.trade_count,
+    updated_ts = EXCLUDED.updated_ts
+;

@@ -14,11 +14,6 @@ Log::setLogLevel(LogLevel::DEBUG);
 
 // Script Definition
 $fileMap = [
-    "top" => "intraday/refresh_intraday_top_instruments.sql",
-    "intraday" => "intraday/refresh_intraday.sql",
-    "intradayExchange" => "intraday/refresh_intraday_by_exchange.sql",
-    "intradayAccount" => "intraday/refresh_intraday_by_account.sql",
-
     "tradingdata" => "data/generate_tradingdata.sql",
 ];
 
