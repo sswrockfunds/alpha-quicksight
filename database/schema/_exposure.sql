@@ -1,6 +1,6 @@
-DROP TABLE quicksight.balance_by_minute;
+DROP TABLE quicksight._exposure;
 
-CREATE TABLE quicksight.__exposure
+CREATE TABLE quicksight._exposure
 (
     trading_month  VARCHAR(8),
     trading_week   VARCHAR(8),
@@ -17,5 +17,7 @@ CREATE TABLE quicksight.__exposure
     PRIMARY KEY (trading_minute, account_id)
 );
 
-CREATE INDEX balance_day_time_idx ON quicksight.balance_by_minute (time_of_day, trading_day, account_id);
-
+CREATE INDEX exposure_day_time_idx ON quicksight._exposure (time_of_day, trading_day, account_id);
+CREATE INDEX exposure_hour_idx ON quicksight._exposure (trading_hour, account_id);
+CREATE INDEX exposure_week_idx ON quicksight._exposure (trading_week, account_id);
+CREATE INDEX exposure_month_idx ON quicksight._exposure (trading_month, account_id);
