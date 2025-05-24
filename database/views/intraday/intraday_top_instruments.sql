@@ -33,7 +33,7 @@ SELECT t.trading_day,
            WHEN s.turnover_value_usd IS NULL OR s.turnover_value_usd = 0 THEN NULL
            ELSE round(t.turnover_usd / s.turnover_value_usd * 100, 3)
        END as marketshare_pct,
-       CURRENT_TIMESTAMP as updated_ts
+       CURRENT_TIMESTAMP::timestamp as updated_ts
   FROM top20_instruments t
   JOIN cryptostruct.instruments i ON t.instrument_id=i.instrument_id
   LEFT JOIN cryptostruct.instruments_stats_daily s ON t.trading_day=s.day AND t.instrument_id=s.instrument_id
