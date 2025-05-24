@@ -1,0 +1,16 @@
+#!/usr/bin/env php
+<?php
+
+use AlphaRock\Core\Log\LogLevel;
+use AlphaRock\Core\QuickSight\QuickSightBalanceImport;
+use AlphaRock\Core\Static\Log;
+use AlphaRock\Core\Static\MonkeyCluster;
+
+require_once __DIR__ . "/../vendor/autoload.php";
+
+Log::setLogLevel(LogLevel::DEBUG);
+$lastTs = MonkeyCluster::fetchField("SELECT max(trading_minute) FROM quicksight._exposure") ?? '2025-05-18';
+
+QuickSightBalanceImport::balanceForTimestamp($lastTs, 1500);
+
+

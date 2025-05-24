@@ -51,7 +51,7 @@ foreach ($Cli->args as $job) {
         replacements: [ '{script_input}' => $scriptInput]
     );
 
-// Run the script
+    // Run the script
     Log::info("Executing SQL script: {$fileMap[$job]}");
     $result = MonkeyCluster::query($sql);
     $queryTimeSec = round($result->getTime(), 3);

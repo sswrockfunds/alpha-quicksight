@@ -4,11 +4,6 @@
     "license": "proprietary",
     "type": "library",
     "prefer-stable": true,
-    "autoload": {
-        "psr-4": {
-            "AlphaRock\\Alpha\\QuickSight\\": "php/src/"
-        }
-    },
     "repositories": [
         { "type": "git", "url": "git@github.com:sswrockfunds/core.git" },
         { "type": "git", "url": "git@github.com:cryptostruct/market-connectors.git" }
