@@ -2,10 +2,7 @@
 
 
 with script_input as(
-    SELECT '2025-05-23'::timestamp as "day",
-        '2025-05-20'::timestamp as "start",
-        '2025-05-21'::timestamp as "end",
-            CURRENT_TIMESTAMP::timestamp as "now"
+   {script_input}
 ),
 
      trades_by_minute as(
@@ -21,7 +18,10 @@ with script_input as(
      ),
      insert_data as(
 
-         SELECT trading_day,
+         SELECT to_char(trading_minute, 'YYYY-MM') AS trading_month,   -- trading_month: YYYY-MM string
+                to_char(trading_minute, 'IYYY-"W"IW') AS trading_week, -- trading_week: ISO week (e.g., 2025-W17)
+                trading_day,
+                date_trunc('hour', trading_minute) AS trading_hour,    -- trading_hour: timestamp rounded to the hour
                 trading_minute,
                 time_of_day,
                 exchange_id,
@@ -40,6 +40,6 @@ with script_input as(
      )
 
 
-INSERT INTO quicksight.tradingdata_by_minute
+INSERT INTO quicksight._tradingdata
 SELECT * FROM insert_data
     ON CONFLICT (trading_minute, account_id) DO NOTHING;

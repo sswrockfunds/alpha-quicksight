@@ -1,4 +1,4 @@
-CREATE TABLE quicksight.tradingdata_by_minute
+CREATE TABLE quicksight._tradingdata
 (
     trading_month  VARCHAR(8),
     trading_week   VARCHAR(8),
@@ -20,4 +20,7 @@ CREATE TABLE quicksight.tradingdata_by_minute
     PRIMARY KEY (trading_minute, account_id)
 );
 
-CREATE INDEX tradingdata_day_time_idx ON tradingdata_by_minute (time_of_day, trading_day, account_id);
+CREATE INDEX tradingdata_day_time_idx ON quicksight._tradingdata (time_of_day, trading_day, account_id);
+CREATE INDEX tradingdata_hour_idx ON quicksight._tradingdata (trading_hour, account_id);
+CREATE INDEX tradingdata_week_idx ON quicksight._tradingdata (trading_week, account_id);
+CREATE INDEX tradingdata_month_idx ON quicksight._tradingdata (trading_month, account_id);

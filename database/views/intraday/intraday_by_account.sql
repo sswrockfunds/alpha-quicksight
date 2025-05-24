@@ -10,7 +10,7 @@ WITH base AS (
         SUM(tpl1_usd)     AS tpl1_usd,
         SUM(tpl60_usd)    AS tpl60_usd,
         SUM(tpl300_usd)   AS tpl300_usd
-    FROM quicksight.tradingdata_by_minute
+    FROM quicksight._tradingdata
     WHERE trading_day >= CURRENT_DATE - INTERVAL '7 days'
     GROUP BY trading_day, time_of_day, account_id
 ),
@@ -82,6 +82,6 @@ final_data AS (
 
 
 SELECT * FROM final_data
-ORDER BY account_id, exchange_id, market, time_of_day;
+ORDER BY account_id, exchange_id, time_of_day;
 
-CREATE UNIQUE INDEX intraday_by_account_time_idx ON quicksight.intraday_by_account (account_id, exchange_id, market, time_of_day);
+CREATE UNIQUE INDEX intraday_by_account_time_idx ON quicksight.intraday_by_account (account_id, exchange_id, time_of_day);

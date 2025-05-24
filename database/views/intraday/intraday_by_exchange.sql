@@ -10,7 +10,7 @@ WITH base AS (
         SUM(tpl1_usd)     AS tpl1_usd,
         SUM(tpl60_usd)    AS tpl60_usd,
         SUM(tpl300_usd)   AS tpl300_usd
-    FROM quicksight.tradingdata_by_minute
+    FROM quicksight._tradingdata
     WHERE trading_day >= CURRENT_DATE - INTERVAL '7 days'
     GROUP BY trading_day, time_of_day, exchange_id
 ),

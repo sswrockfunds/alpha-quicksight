@@ -3,7 +3,7 @@ CREATE MATERIALIZED VIEW quicksight.intraday_top_instruments AS
 
 WITH
 -- Directly on trades // if necessary, switch to already aggregated data
-top20_instruments as (
+top_instruments as (
     SELECT CURRENT_DATE as trading_day,
            instrument_id,
            round(sum(coalesce(turnover_usd,0)), 2) as turnover_usd,
@@ -34,7 +34,7 @@ SELECT t.trading_day,
            ELSE round(t.turnover_usd / s.turnover_value_usd * 100, 3)
        END as marketshare_pct,
        CURRENT_TIMESTAMP::timestamp as updated_ts
-  FROM top20_instruments t
+  FROM top_instruments t
   JOIN cryptostruct.instruments i ON t.instrument_id=i.instrument_id
   LEFT JOIN cryptostruct.instruments_stats_daily s ON t.trading_day=s.day AND t.instrument_id=s.instrument_id
 ORDER BY s.turnover_value_usd desc;
