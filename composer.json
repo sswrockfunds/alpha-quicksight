@@ -6,16 +6,17 @@
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
-            "AlphaRock\\Alpha\\QuickSight\\": "src/"
+            "AlphaRock\\Alpha\\QuickSight\\": "php/src/"
         }
     },
     "repositories": [
-        { "type": "git", "url": "git@github.com:sswrockfunds/core.git" }
+        { "type": "git", "url": "git@github.com:sswrockfunds/core.git" },
+        { "type": "git", "url": "git@github.com:cryptostruct/market-connectors.git" }
     ],
     "minimum-stability": "beta",
     "require": {
         "php": "^8.4",
-        "sswrockfunds/core": "^0.13"
+        "sswrockfunds/core": "^0.14"
     },
     "scripts": {
         "core": "rsync -azvch --group \"$HOME/git/core/php/src\" \"$HOME/git/alpha-quicksight/vendor/sswrockfunds/core/php\"",
