@@ -14,7 +14,8 @@ with script_input as(
                 p.now
          FROM alpha.trades t
                   JOIN cryptostruct.instruments i ON t.instrument_id=i.instrument_id
-                  JOIN script_input p ON t.trade_ts>=p.day AND t.trade_ts<(p.day + Interval '1 day')
+                  JOIN script_input p ON t.trade_ts>=p.start
+                                     AND t.trade_ts<p.end
      ),
      insert_data as(
 

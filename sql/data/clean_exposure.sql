@@ -1,1 +1,1 @@
-DELETE FROM quicksight.exposure_by_minute WHERE trading_minute<CURRENT_DATE - Interval '8 day'
+DELETE FROM quicksight._exposure WHERE trading_minute<CURRENT_DATE - Interval '8 day'
