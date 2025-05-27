@@ -30,4 +30,7 @@ GRANT SELECT ON ALL TABLES IN SCHEMA account TO quicksight_readonly;
 ALTER DEFAULT PRIVILEGES IN SCHEMA account GRANT SELECT ON TABLES TO quicksight_readonly;
 
 -- Permissions for views
+GRANT SELECT ON quicksight.intraday TO quicksight_readonly;
+GRANT SELECT ON quicksight.intraday_by_account TO quicksight_readonly;
+GRANT SELECT ON quicksight.intraday_by_exchange TO quicksight_readonly;
 GRANT SELECT ON quicksight.intraday_top_instruments TO quicksight_readonly;
