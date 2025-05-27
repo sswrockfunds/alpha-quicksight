@@ -13,6 +13,7 @@ CREATE TABLE quicksight._exposure
     balance_usd    NUMERIC(20, 2),
     fiat_usd       NUMERIC(20, 2),
     crypto_usd     NUMERIC(20, 2),
+    pnl_usd        NUMERIC(20, 2),
     updated_ts     TIMESTAMP,
     PRIMARY KEY (trading_minute, account_id)
 );
