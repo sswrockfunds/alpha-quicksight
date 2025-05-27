@@ -1,6 +1,7 @@
 #!/usr/bin/env php
 <?php
 
+use AlphaRock\Core\Cli\CliParser;
 use AlphaRock\Core\Database\Query\SQL;
 use AlphaRock\Core\Log\LogLevel;
 use AlphaRock\Core\Static\Log;
@@ -8,7 +9,10 @@ use AlphaRock\Core\Static\MonkeyCluster;
 
 require_once __DIR__ . "/../vendor/autoload.php";
 
-Log::setLogLevel(LogLevel::DEBUG);
+$Cli = new CliParser($argv);
+if ($Cli->optionIsSet('debug')) {
+    Log::setLogLevel(LogLevel::DEBUG);
+}
 
 // Script Definition
 $fileMap = [

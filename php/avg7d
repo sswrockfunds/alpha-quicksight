@@ -1,14 +1,18 @@
 #!/usr/bin/env php
 <?php
 
-use AlphaRock\Core\Database\Query\SQL;
-use AlphaRock\Core\Log\LogLevel;
-use AlphaRock\Core\Static\Log;
+use AlphaRock\Core\Cli\CliParser;
 use AlphaRock\Core\Static\MonkeyCluster;
+use AlphaRock\Core\Static\Log;
+use AlphaRock\Core\Log\LogLevel;
+use AlphaRock\Core\Database\Query\SQL;
 
 require_once __DIR__ . "/../vendor/autoload.php";
 
-Log::setLogLevel(LogLevel::DEBUG);
+$Cli = new CliParser($argv);
+if ($Cli->optionIsSet('debug')) {
+    Log::setLogLevel(LogLevel::DEBUG);
+}
 
 // Script Definition
 $fileMap = [
@@ -16,7 +20,7 @@ $fileMap = [
 ];
 
 foreach ($fileMap as $job => $file) {
-    $sql = SQL::fromFile( __DIR__ . "/../sql/" . $file);
+    $sql = SQL::fromFile(__DIR__ . "/../sql/" . $file);
 
     Log::info("Refreshing Materialized View: $job");
     $result = MonkeyCluster::query($sql);

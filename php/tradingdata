@@ -10,7 +10,10 @@ use AlphaRock\Core\Static\MonkeyCluster;
 
 require_once __DIR__ . "/../vendor/autoload.php";
 
-Log::setLogLevel(LogLevel::DEBUG);
+$Cli = new CliParser($argv);
+if ($Cli->optionIsSet('debug')) {
+    Log::setLogLevel(LogLevel::DEBUG);
+}
 
 // Replacements
 $Cli = new CliParser($argv);
