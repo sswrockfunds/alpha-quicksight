@@ -10,7 +10,7 @@ use AlphaRock\Core\Database\Query\SQL;
 require_once __DIR__ . "/../vendor/autoload.php";
 
 $Cli = new CliParser($argv);
-if ($Cli->optionIsSet('debug')) {
+if ($Cli->flagIsSet('debug')) {
     Log::setLogLevel(LogLevel::DEBUG);
 }
 
