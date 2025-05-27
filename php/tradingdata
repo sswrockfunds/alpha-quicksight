@@ -1,0 +1,38 @@
+#!/usr/bin/env php
+<?php
+
+use AlphaRock\Core\Cli\CliParser;
+use AlphaRock\Core\Common\Time;
+use AlphaRock\Core\Database\Query\SQL;
+use AlphaRock\Core\Static\Log;
+use AlphaRock\Core\Static\MonkeyCluster;
+
+require_once __DIR__ . "/src/alpha-quicksight.php";
+
+// Replacements
+/** @var CliParser $Cli */
+$start = $Cli->getOption('start', Time::generate('32 minutes ago', Time::MYSQL_MINUTE));
+$end = $Cli->getOption('end', Time::generate('2 minutes ago', Time::MYSQL_MINUTE));
+
+Log::info("Updating full day TradeData for $start to $end");
+$scriptInput = <<<SQL
+    SELECT CURRENT_TIMESTAMP::timestamp as "now",
+           CURRENT_DATE::timestamp as "today",
+           '$start'::timestamp as "start",
+           '$end'::timestamp as "end"
+SQL;
+
+Log::debug("\n$scriptInput");
+
+
+$sql = SQL::fromFile(
+    filepath: __DIR__ . "/../sql/data/generate_tradingdata.sql",
+    replacements: ['{script_input}' => $scriptInput]
+);
+
+// Run the script
+$result = MonkeyCluster::query($sql);
+$queryTimeSec = round($result->getTime(), 3);
+$rowCount = $result->getRowCount();
+
+Log::info("$rowCount rows affected / $queryTimeSec sec");

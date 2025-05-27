@@ -1,0 +1,29 @@
+#!/usr/bin/env php
+<?php
+
+use AlphaRock\Core\Cli\CliParser;
+use AlphaRock\Core\Database\Query\SQL;
+use AlphaRock\Core\Static\Log;
+use AlphaRock\Core\Static\MonkeyCluster;
+
+require_once __DIR__ . "/src/alpha-quicksight.php";
+
+// Script Definition
+$fileMap = [
+    "Current Day Base data" => "data/refresh_current_day.sql",
+    "Intraday Performance" => "intraday/refresh_intraday.sql",
+    "Intraday Performance by Exchange" => "intraday/refresh_intraday_by_exchange.sql",
+    "Intraday Performance by Account" => "intraday/refresh_intraday_by_account.sql",
+    "Intraday Top 100 Instruments" => "intraday/refresh_intraday_top_instruments.sql",
+];
+
+foreach ($fileMap as $job => $file) {
+    $sql = SQL::fromFile( __DIR__ . "/../sql/" . $file);
+
+    Log::info("Refreshing Materialized View: $job");
+    $result = MonkeyCluster::query($sql);
+    $queryTimeSec = round($result->getTime(), 3);
+    $rowCount = $result->getRowCount();
+
+    Log::debug("$queryTimeSec sec");
+}
