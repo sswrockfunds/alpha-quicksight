@@ -5,6 +5,9 @@
   - `quicksight.intraday_by_exchange`
   - `quicksight.intraday_by_account`
   - `quicksight.intraday_top_instruments`
+- Added deploy script to deploy to monkey-bi server
+  - `composer deploy`
+  - `composer dev`
 - Added user scripts to `database/user`
   - scripts
     - `create_users.sql`
