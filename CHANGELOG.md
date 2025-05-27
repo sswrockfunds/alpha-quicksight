@@ -1,6 +1,10 @@
 ## [Unreleased]
 ### Added
-- Added `quicksight.intraday_top_instruments`
+- Added intraday views and tables
+  - `quicksight.intraday`
+  - `quicksight.intraday_by_exchange`
+  - `quicksight.intraday_by_account`
+  - `quicksight.intraday_top_instruments`
 - Added user scripts to `database/user`
   - scripts
     - `create_users.sql`
@@ -11,6 +15,7 @@
 - Added `database/permission.sql` that defines all permissions
 - Added generic SQL-Script-Runner
 ### Changed
+- Need `sswrockfunds/core 0.15.0` as min dependency
 ### Fixed
 ### Removed
 ### -
