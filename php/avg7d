@@ -4,15 +4,10 @@
 use AlphaRock\Core\Cli\CliParser;
 use AlphaRock\Core\Static\MonkeyCluster;
 use AlphaRock\Core\Static\Log;
-use AlphaRock\Core\Log\LogLevel;
 use AlphaRock\Core\Database\Query\SQL;
 
-require_once __DIR__ . "/../vendor/autoload.php";
+require_once __DIR__ . "/src/alpha-quicksight.php";
 
-$Cli = new CliParser($argv);
-if ($Cli->flagIsSet('debug')) {
-    Log::setLogLevel(LogLevel::DEBUG);
-}
 
 // Script Definition
 $fileMap = [

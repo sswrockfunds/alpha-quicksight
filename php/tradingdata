@@ -4,19 +4,13 @@
 use AlphaRock\Core\Cli\CliParser;
 use AlphaRock\Core\Common\Time;
 use AlphaRock\Core\Database\Query\SQL;
-use AlphaRock\Core\Log\LogLevel;
 use AlphaRock\Core\Static\Log;
 use AlphaRock\Core\Static\MonkeyCluster;
 
-require_once __DIR__ . "/../vendor/autoload.php";
-
-$Cli = new CliParser($argv);
-if ($Cli->flagIsSet('debug')) {
-    Log::setLogLevel(LogLevel::DEBUG);
-}
+require_once __DIR__ . "/src/alpha-quicksight.php";
 
 // Replacements
-$Cli = new CliParser($argv);
+/** @var CliParser $Cli */
 $start = $Cli->getOption('start', Time::generate('32 minutes ago', Time::MYSQL_MINUTE));
 $end = $Cli->getOption('end', Time::generate('2 minutes ago', Time::MYSQL_MINUTE));
 
