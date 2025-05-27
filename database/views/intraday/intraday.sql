@@ -1,76 +1,31 @@
 DROP MATERIALIZED VIEW quicksight.intraday;
 CREATE MATERIALIZED VIEW quicksight.intraday AS
 
-WITH base AS (
-    SELECT
-        time_of_day,
-        trading_day,
-        SUM(turnover_usd) AS turnover_usd,
-        SUM(tpl1_usd)     AS tpl1_usd,
-        SUM(tpl60_usd)    AS tpl60_usd,
-        SUM(tpl300_usd)   AS tpl300_usd
-    FROM quicksight._tradingdata
-    WHERE trading_day >= CURRENT_DATE - INTERVAL '7 days'
-GROUP BY trading_day, time_of_day
-    ),
-
--- current day only
-    current_day AS (
-SELECT
-    time_of_day,
-    SUM(turnover_usd) AS turnover_current_day,
-    SUM(tpl1_usd)     AS tpl1_current_day,
-    SUM(tpl60_usd)    AS tpl60_current_day,
-    SUM(tpl300_usd)   AS tpl300_current_day
-FROM base
-WHERE trading_day = CURRENT_DATE
-GROUP BY time_of_day
-    ),
-
--- 7-day average
-    avg7d AS (
-SELECT
-    time_of_day,
-    ROUND(AVG(turnover_usd), 2) AS avg7d_turnover,
-    ROUND(AVG(tpl1_usd), 2)     AS avg7d_tpl1,
-    ROUND(AVG(tpl60_usd), 2)    AS avg7d_tpl60,
-    ROUND(AVG(tpl300_usd), 2)   AS avg7d_tpl300
-FROM base
-GROUP BY time_of_day
-    ),
-
--- combine
-    combined AS (
-SELECT
-    coalesce(co.time_of_day, a.time_of_day) as time_of_day,
-    co.turnover_current_day,
-    co.tpl1_current_day,
-    co.tpl60_current_day,
-    co.tpl300_current_day,
-    a.avg7d_turnover,
-    a.avg7d_tpl1,
-    a.avg7d_tpl60,
-    a.avg7d_tpl300
-FROM avg7d a
-    FULL OUTER JOIN current_day co ON co.time_of_day = a.time_of_day
-    )
-
--- final with cumulative
-SELECT
-    time_of_day,
-    turnover_current_day,
-    SUM(turnover_current_day) OVER (ORDER BY time_of_day) AS turnover_current_day_cum,
-    SUM(coalesce(co.tpl1_current_day, 0)) OVER (ORDER BY time_of_day) AS tpl1_current_cum,
-    SUM(coalesce(co.tpl60_current_day, 0)) OVER (ORDER BY time_of_day) AS tpl60_current_cum,
-    SUM(coalesce(co.tpl300_current_day, 0)) OVER (ORDER BY time_of_day) AS tpl300_current_cum,
-
-    avg7d_turnover,
-    SUM(avg7d_turnover) OVER (ORDER BY time_of_day) AS avg7d_turnover_cum,
-    SUM(avg7d_tpl1) OVER (ORDER BY time_of_day) AS avg7d_tpl1_cum,
-    SUM(avg7d_tpl60) OVER (ORDER BY time_of_day) AS avg7d_tpl60_cum,
-    SUM(avg7d_tpl300) OVER (ORDER BY time_of_day) AS avg7d_tpl300_cum
-
-FROM combined co
-ORDER BY time_of_day;
+SELECT coalesce(c.trading_day, CURRENT_DATE) as trading_day,
+       coalesce(c.time_of_day, a.time_of_day) as time_of_day,
+       c.updated_ts,
+       -- current_day
+       sum(c.turnover) as turnover,
+       sum(c.tpl1)     as tpl1,
+       sum(c.tpl60)    as tpl30,
+       sum(c.tpl300)   as tpl60,
+       sum(c.pnl)      as pnl,
+       -- current_day cummulated
+       sum(c.turnover_cum) as turnover_cum,
+       sum(c.tpl1_cum)     as tpl1_cum,
+       sum(c.tpl60_cum)    as tpl60_cum,
+       sum(c.tpl300_cum)   as tpl300_cum,
+       sum(c.pnl_cum)      as pnl_cum,
+       -- avg7d cummulated
+       sum(a.turnover_avg7d_cum) as turnover_avg7d_cum,
+       sum(a.tpl1_avg7d_cum)     as tpl1_avg7d_cum,
+       sum(a.tpl60_avg7d_cum)    as tpl60_avg7d_cum,
+       sum(a.tpl300_avg7d_cum)   as tpl300_avg7d_cum,
+       sum(a.pnl_avg7d_cum)      as pnl_avg7d_cum
+FROM quicksight._current_day c
+         FULL OUTER JOIN quicksight._avg7d a ON c.time_of_day=a.time_of_day AND c.account_id=a.account_id
+GROUP BY c.trading_day,
+         c.time_of_day, a.time_of_day,
+         c.updated_ts;
 
 CREATE UNIQUE INDEX intraday_time_idx ON quicksight.intraday (time_of_day);
