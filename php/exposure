@@ -2,6 +2,7 @@
 <?php
 
 use AlphaRock\Core\Cli\CliParser;
+use AlphaRock\Core\Common\Time;
 use AlphaRock\Core\Database\Query\SQL;
 use AlphaRock\Core\Log\LogLevel;
 use AlphaRock\Core\QuickSight\QuickSightBalanceImport;
@@ -14,7 +15,7 @@ Log::setLogLevel(LogLevel::DEBUG);
 $Cli = new CliParser($argv);
 $n = $Cli->getOption('n', 61);
 
-$lastTs = MonkeyCluster::fetchField("SELECT max(trading_minute) FROM quicksight._exposure") ?? '2025-05-18';
+$lastTs = MonkeyCluster::fetchField("SELECT max(trading_minute) FROM quicksight._exposure") ?? Time::today(-8);
 
 QuickSightBalanceImport::balanceForTimestamp($lastTs, $n);
 

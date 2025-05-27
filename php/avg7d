@@ -12,11 +12,7 @@ Log::setLogLevel(LogLevel::DEBUG);
 
 // Script Definition
 $fileMap = [
-    "Current Day Base data" => "data/refresh_current_day.sql",
-    "Intraday Performance" => "intraday/refresh_intraday.sql",
-    "Intraday Performance by Exchange" => "intraday/refresh_intraday_by_exchange.sql",
-    "Intraday Performance by Account" => "intraday/refresh_intraday_by_account.sql",
-    "Intraday Top 100 Instruments" => "intraday/refresh_intraday_top_instruments.sql",
+    "Pre Aggregate Average for last 7 Days" => "data/refresh_avg7d.sql",
 ];
 
 foreach ($fileMap as $job => $file) {

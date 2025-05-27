@@ -4,7 +4,8 @@
 
 |                          | Interval | Type               | Scope            | Script Runtime |
 |--------------------------|----------|--------------------|------------------|----------------|
-| tradingdata (full day)   | 5min     | Table Delta Update | Account, Minute  | 5 sec          |
+| tradingdata              | 1min     | Table Delta Update | Account, Minute  | 1 sec          |
+| tradingdata (full day)   | hourly   | Table Delta Update | Account, Minute  | 5 sec          |
 | exposure                 | 5min     | Table Delta Update | Account, Minute  | 10 sec         |
 | avg7d                    | daily    | Materialized View  | Account, Minute  | 150 sec        |
 | current_day              | 5min     | Materialized View  | Account, Minute  | 50 sec         |
@@ -14,15 +15,13 @@
 | intraday Account         | 5min     | Materialized View  | Account, Minute  | 17 sec         |
 | intraday Top Instruments | 5min     | Materialized View  | Instrument       | 1 sec          |
 | ---                      |          |                    |                  |                |
+| clean tradingdata        | daily    |                    |                  |                |
+| clean exposure           | daily    |                    |                  |                |
 
 ## ToDos
 
 - Pnl daily
-- current_hour (?)
-- balance per minute
 - transfers
-- tradingdata
-    - add hour
 
 ## Provided Data
 

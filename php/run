@@ -10,6 +10,7 @@ use AlphaRock\Core\Static\MonkeyCluster;
 
 require_once __DIR__ . "/../vendor/autoload.php";
 
+exit;
 Log::setLogLevel(LogLevel::DEBUG);
 
 // Script Definition
