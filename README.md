@@ -1,4 +1,4 @@
-# AlphaQuickSight 0.1.0
+# AlphaQuickSight 0.2.0
 
 ## Schedule
 |                          | Interval | Type               | Scope            | Script Runtime |

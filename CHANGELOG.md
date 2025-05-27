@@ -1,5 +1,13 @@
 ## [Unreleased]
 ### Added
+### Changed
+### Fixed
+### Removed
+### -
+
+
+## [0.2.0] - 2025-05-27 16:12 UTC
+### Added
 - Added intraday views and tables
   - `quicksight.intraday`
   - `quicksight.intraday_by_exchange`
@@ -19,10 +27,6 @@
 - Added generic SQL-Script-Runner
 ### Changed
 - Need `sswrockfunds/core 0.15.0` as min dependency
-### Fixed
-### Removed
-### -
-
 
 ## [0.1.0] - 2025-05-23 09:45 UTC
 ### Added
