@@ -1,7 +1,8 @@
-DROP MATERIALIZED VIEW IF EXISTS quicksight.intraday_by_account;
-CREATE MATERIALIZED VIEW quicksight.intraday_by_account AS
+DROP MATERIALIZED VIEW IF EXISTS quicksight.intraday_by_exchange;
+CREATE MATERIALIZED VIEW quicksight.intraday_by_exchange AS
 
-SELECT coalesce(c.trading_day, CURRENT_DATE) as trading_day,
+SELECT concat(coalesce(c.trading_day, CURRENT_DATE), ' ', coalesce(c.time_of_day, a.time_of_day))::timestamp AS trading_ts,
+       coalesce(c.trading_day, CURRENT_DATE) as trading_day,
        coalesce(c.time_of_day, a.time_of_day) as time_of_day,
        coalesce(c.exchange_id, a.exchange_id) as exchange_id,
        c.updated_ts,
