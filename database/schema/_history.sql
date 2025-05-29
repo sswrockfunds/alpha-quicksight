@@ -20,7 +20,7 @@ CREATE TABLE quicksight._history
     -- BALANCE METRICS
     exposure_usd        NUMERIC(20, 2),
     crypto_exposure_usd NUMERIC(20, 2),
-    deposits_usd        NUMERIC(20, 2),
+    deposit_usd        NUMERIC(20, 2),
     withdraw_usd        NUMERIC(20, 2),
     pnl_usd             NUMERIC(20, 2),
     --- TRADING METRICS
