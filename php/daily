@@ -1,0 +1,59 @@
+#!/usr/bin/env php
+<?php
+
+use AlphaRock\Core\Cli\CliParser;
+use AlphaRock\Core\Common\Time;
+use AlphaRock\Core\Static\MonkeyCluster;
+use AlphaRock\Core\Static\Log;
+use AlphaRock\Core\Database\Query\SQL;
+
+require_once __DIR__ . "/src/alpha-quicksight.php";
+
+/** @var CliParser $Cli */
+$enrichAccounts = $Cli->flagIsSet('accounts');
+$exposure = $Cli->flagIsSet('exposure');
+$transfers = $Cli->flagIsSet('transfers');
+$pnl = $Cli->flagIsSet('pnl');
+
+$start = $Cli->getOption('start', $Cli->getOption('day', Time::today(-1)));
+Time::toDate($start);
+$end = $Cli->getOption('end', $start);
+Time::toDate($end);
+$timeRange = $start===$end ? $start : "$start to $end";
+
+$input = <<<SQL
+    SELECT '$start'::timestamp as "start",
+           '$end'::timestamp as "end"
+SQL;
+
+
+// Exposure Data
+if($exposure) {
+    Log::info("Generating Exposure Data for $timeRange");
+    $sql = SQL::fromFile(__DIR__ . "/../sql/daily/generate_daily_exposure.sql", ['{script_input}' => $input]);
+    MonkeyCluster::query($sql);
+}
+
+// Transfers
+if($transfers) {
+    Log::info("Generating Transfer Data for $timeRange");
+    $sql = SQL::fromFile(__DIR__ . "/../sql/daily/generate_daily_transfers.sql", ['{script_input}' => $input]);
+    MonkeyCluster::query($sql);
+}
+
+// Account Details
+if($enrichAccounts) {
+    Log::info("Enriching Account Details for $timeRange");
+    $sql = SQL::fromFile(__DIR__ . "/../sql/daily/generate_daily_account_details.sql", ['{script_input}' => $input]);
+    MonkeyCluster::query($sql);
+
+    $sql = SQL::fromFile(__DIR__ . "/../sql/daily/generate_daily_account_exchange_id.sql");
+    MonkeyCluster::query($sql);
+}
+
+// Calculating PnL
+if($pnl) {
+    Log::error("PnL Calculation not implemented yet");
+}
+
+Log::info("Done.");

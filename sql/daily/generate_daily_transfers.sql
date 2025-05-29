@@ -1,8 +1,5 @@
 WITH
-    script_input as (
-        SELECT '2025-05-01'::date as "start",
-               '2025-05-29'::date as "end"
-    ),
+    script_input as ( {script_input} ),
 
     transfer_data AS (
         SELECT t.transfer_ts::date                  as trading_day,
@@ -13,7 +10,7 @@ WITH
                t.usd_value,
                t.fees_usd
         FROM account.transfer t
-                 JOIN script_input p ON t.transfer_ts::date>=p.start AND t.transfer_ts::date<=p.end
+                 JOIN script_input p ON t.transfer_ts>=p.start AND t.transfer_ts<=p.end
     ),
 
     deposit_data AS (
@@ -42,8 +39,6 @@ FROM deposit_data d
     FULL OUTER JOIN withdraw_data w ON d.trading_day=w.trading_day
     AND d.account_id=w.account_id
     )
-
-SELECT * FROM cashflow
 
 UPDATE quicksight._history h
 SET deposit_usd = c.deposit_usd,

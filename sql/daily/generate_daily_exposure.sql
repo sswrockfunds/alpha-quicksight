@@ -1,9 +1,6 @@
 WITH
 
-    script_input as (
-        SELECT '2025-05-28'::date as "start",
-            '2025-05-28'::date as "end"
-    ),
+    script_input as ( {script_input} ),
 
     insert_data as (
         SELECT to_char(e.trading_date, 'YYYY-MM')    as trading_month,   -- trading_month: YYYY-MM string

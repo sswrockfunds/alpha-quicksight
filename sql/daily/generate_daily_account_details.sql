@@ -1,11 +1,9 @@
 with
-script_input as (
-    SELECT '2025-05-28'::timestamp as "day"
-),
+script_input as ( {script_input} ),
 account_data as (
     SELECT *
     FROM account.history a
-             JOIN script_input p ON a.trading_day = p.day
+    JOIN script_input p ON a.trading_day >= p.start AND a.trading_day <= p.end
 )
 
 UPDATE quicksight._history h
