@@ -13,7 +13,8 @@ with
         FROM alpha.trades t
                  JOIN cryptostruct.instruments i ON t.instrument_id=i.instrument_id
                  JOIN script_input p ON t.trade_ts>=p.start
-                                    AND t.trade_ts<=p.end_eod
+                                    AND t.trade_ts<p.end
+                                    AND t.trade_ts<p.cut_off
     ),
 
     insert_data as (

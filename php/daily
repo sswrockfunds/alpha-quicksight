@@ -19,13 +19,15 @@ $start = $Cli->getOption('start', $Cli->getOption('day', Time::today(-1)));
 Time::toDate($start);
 $end = $Cli->getOption('end', $start);
 Time::toDate($end);
+$cutOff = Time::today();
+
 $timeRange = $start===$end ? $start : "$start to $end";
 
 $input = <<<SQL
     SELECT '$start'::timestamp as "start",
-           '$end'::timestamp as "end"
+           '$end'::timestamp as "end",
+           '$cutOff'::timestamp as "cut_off"
 SQL;
-
 
 // Exposure Data
 if($exposure) {
@@ -52,8 +54,13 @@ if($enrichAccounts) {
 }
 
 // Calculating PnL
-if($pnl) {
-    Log::error("PnL Calculation not implemented yet");
+if($pnl || $transfers) {
+    if(!$pnl){
+        Log::warning("If Transfers are Updated PnL must be updated too");
+    }
+    Log::info("Caclulating PnL for $timeRange");
+    $sql = SQL::fromFile(__DIR__ . "/../sql/daily/calculate_pnl.sql", ['{script_input}' => $input]);
+    MonkeyCluster::query($sql);
 }
 
 Log::info("Done.");

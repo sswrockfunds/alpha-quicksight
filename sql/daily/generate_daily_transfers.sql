@@ -10,7 +10,9 @@ WITH
                t.usd_value,
                t.fees_usd
         FROM account.transfer t
-                 JOIN script_input p ON t.transfer_ts>=p.start AND t.transfer_ts<=p.end
+                 JOIN script_input p ON t.transfer_ts>=p.start
+                                    AND t.transfer_ts<=p.end
+                                    AND t.transfer_ts<p.cut_off
     ),
 
     deposit_data AS (

@@ -12,9 +12,11 @@ WITH
                e.account_id,
                round(sum(e.backend_balance_usd), 2) as exposure_usd,
                coalesce(round(sum(e.backend_balance_usd) FILTER (WHERE e.underlying_type NOT IN ('fiat','stable_coin')), 2), 0.00) as exposure_usd,
-               CURRENT_TIMESTAMP::timestamp(3) as updated_ts
+               CURRENT_TIMESTAMP::timestamp(0) as updated_ts
         FROM exposure.underlying_positions e
-                 JOIN script_input p ON e.trading_date>=p.start AND e.trading_date<=p.end
+                 JOIN script_input p ON e.trading_date>=p.start
+                                    AND e.trading_date<=p.end
+                                    AND e.trading_date<p.cut_off
         GROUP BY to_char(trading_date, 'YYYY-MM'),
                  to_char(trading_date, 'IYYY-"W"IW'),
                  trading_date,

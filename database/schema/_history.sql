@@ -20,7 +20,7 @@ CREATE TABLE quicksight._history
     -- BALANCE METRICS
     exposure_usd        NUMERIC(20, 2),
     crypto_exposure_usd NUMERIC(20, 2),
-    deposit_usd        NUMERIC(20, 2),
+    deposit_usd         NUMERIC(20, 2),
     withdraw_usd        NUMERIC(20, 2),
     pnl_usd             NUMERIC(20, 2),
     --- TRADING METRICS
@@ -36,7 +36,6 @@ CREATE TABLE quicksight._history
     PRIMARY KEY (trading_day, account_id)
 );
 
---CREATE INDEX tradingdata_day_time_idx ON quicksight._history (time_of_day, trading_day, account_id);
---CREATE INDEX tradingdata_hour_idx ON quicksight._history (trading_hour, account_id);
---CREATE INDEX tradingdata_week_idx ON quicksight._history (trading_week, account_id);
---CREATE INDEX tradingdata_month_idx ON quicksight._history (trading_month, account_id);
+CREATE INDEX performance_history_month_idx ON quicksight._history (trading_month, account_id);
+CREATE INDEX performance_history_week_idx ON quicksight._history (trading_week, account_id);
+CREATE INDEX performance_history_num_idx ON quicksight._history (year_num, month_num, day_num, account_id);
