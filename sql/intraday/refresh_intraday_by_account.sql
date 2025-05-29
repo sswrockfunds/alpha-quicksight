@@ -1,1 +1,1 @@
-REFRESH MATERIALIZED VIEW CONCURRENTLY quicksight.intraday_by_exchange;
+REFRESH MATERIALIZED VIEW CONCURRENTLY quicksight.intraday_by_account;
