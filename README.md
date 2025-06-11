@@ -48,13 +48,16 @@ A full documentation of dependencies should guarantee maintainability and stabil
 
 ## Daily
 - Exposure
-    - Balance from backend
-    - Fx from Postgres
+    - from CryptoStruct Backends `positions__underlyings` with `cryptostruct.fx_daily`
     - Transfers from `account.transfer`
     - TPL60 / Turnover from `alpha.trades`
 
 ## Intraday
-
+- Trade Data from `alpha.trades`
+- Exposure from CryptoStruct Backends `positions__underlyings` with `cryptostruct.fx_minute`
+- All other views are `MATERIALIZED VIEWS` that are generated on this base data
+  - `_avg7d` only needs to be generated once a day
+  - `intraday_top_instruments` view is only based on the `alpha.trades` table
 
 ## Setup
 ### Access
