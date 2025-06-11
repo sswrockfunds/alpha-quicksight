@@ -1,5 +1,6 @@
 ## [Unreleased]
 ### Added
+- Added sql for monthly and weekly views
 ### Changed
 ### Fixed
 - Fixed Duplicate issue in Materialized Views
