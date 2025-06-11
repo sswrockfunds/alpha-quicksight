@@ -1,4 +1,4 @@
-# AlphaQuickSight 0.2.0
+# AlphaQuickSight 1.0.0
 
 ## Schedule
 

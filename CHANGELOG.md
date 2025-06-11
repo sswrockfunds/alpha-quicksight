@@ -1,5 +1,13 @@
 ## [Unreleased]
 ### Added
+### Changed
+### Fixed
+### Removed
+### -
+
+
+## [1.0.0] - 2025-06-11 20:34 UTC
+### Added
 - Added Daily Import
   - Exposure
   - PnL
@@ -8,10 +16,6 @@
   - Account mapping
 ### Changed
 - Moved Balance Import classes from to repo
-### Fixed
-### Removed
-### -
-
 
 ## [0.2.0] - 2025-05-27 16:12 UTC
 ### Added
