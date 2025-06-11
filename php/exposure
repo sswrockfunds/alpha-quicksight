@@ -1,12 +1,13 @@
 #!/usr/bin/env php
 <?php
 
+use AlphaRock\Alpha\QuickSight\Cryptostruct\MinuteBalanceImport;
 use AlphaRock\Core\Cli\CliParser;
 use AlphaRock\Core\Common\Time;
 use AlphaRock\Core\Static\MonkeyCluster;
 use AlphaRock\Core\Static\Log;
 use AlphaRock\Core\Database\Query\SQL;
-use AlphaRock\Core\QuickSight\QuickSightBalanceImport;
+
 
 require_once __DIR__ . "/src/alpha-quicksight.php";
 
@@ -14,7 +15,7 @@ require_once __DIR__ . "/src/alpha-quicksight.php";
 $n = $Cli->getOption('n', 61);
 $lastTs = MonkeyCluster::fetchField("SELECT max(trading_minute) FROM quicksight._exposure") ?? Time::today(-8);
 
-QuickSightBalanceImport::balanceForTimestamp($lastTs, $n);
+MinuteBalanceImport::balanceForTimestamp($lastTs, $n);
 
 $result = MonkeyCluster::query(SQL::fromFile(__DIR__ . "/../sql/data/generate_exposure_pnl.sql"));
 $rowCount = $result->getRowCount();
