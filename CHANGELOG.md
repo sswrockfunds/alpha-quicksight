@@ -1,6 +1,7 @@
 ## [Unreleased]
 ### Added
 ### Changed
+- Moved Balance Import classes from to repo
 ### Fixed
 ### Removed
 ### -

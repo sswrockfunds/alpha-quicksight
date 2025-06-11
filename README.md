@@ -31,8 +31,15 @@ A full documentation of dependencies should guarantee maintainability and stabil
   - `account.history`
   - `account.transfer`
   - `alpha.trades`
+  - `alpha.performance_daily`
 - private data from CryptoStruct Backend
   - `positions__underlyings` (implemented in core repo)
+
+old cluster `public.cs_balances`?
+
+???
+àlphaflexx.exposure
+alphaflexx.intraday_balances
 
 
 #### Process
@@ -41,6 +48,25 @@ A full documentation of dependencies should guarantee maintainability and stabil
   - FxImport
   - TradeImport
 - `core`
+  -
+
+
+# Daily
+- Exposure
+  - Balance from backend
+  - fx from Postgres
+  - Transfers from `account.transfer`
+  -
+  - TPL60 / Turnover from `alpha.performance_daily`
+  ````sql
+  SELECT trade_date, account_id,
+			 sum(turnover_usd) as turnover,
+       sum(total_tpl60) as tpl60,
+			 sum(trade_count) as trade_count
+    FROM alpha.performance_daily
+    WHERE trade_date>='2025-01-01'
+    GROUP BY  trade_date, account_id
+  ````
   -
 
 
