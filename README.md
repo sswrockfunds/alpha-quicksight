@@ -1,6 +1,7 @@
 # AlphaQuickSight 0.2.0
 
 ## Schedule
+
 |                          | Interval | Type               | Scope            | Script Runtime |
 |--------------------------|----------|--------------------|------------------|----------------|
 | tradingdata              | 1min     | Table Delta Update | Account, Minute  | 1 sec          |
@@ -16,9 +17,11 @@
 | ---                      |          |                    |                  |                |
 | clean tradingdata        | daily    |                    |                  |                |
 | clean exposure           | daily    |                    |                  |                |
-
+| ---                      |          |                    |                  |                |
+| daily                    | daily    | Table Delta Update | Account, Day     | 15 sec         |
 
 ## Dependencies
+
 The QuickSight data depends heavily on other scripts and processes to gather and prepare data.
 A full documentation of dependencies should guarantee maintainability and stability.
 
@@ -26,48 +29,31 @@ A full documentation of dependencies should guarantee maintainability and stabil
 - public data
     - `cryptostruct.instruments`
     - `cryptostruct.fx_minute`
+    - `cryptostruct.fx_daily`
 - privata data
-  - `account.current`
-  - `account.history`
-  - `account.transfer`
-  - `alpha.trades`
-  - `alpha.performance_daily`
+    - `account.current`
+    - `account.history`
+    - `account.transfer`
+    - `alpha.trades`
 - private data from CryptoStruct Backend
-  - `positions__underlyings` (implemented in core repo)
-
-old cluster `public.cs_balances`?
-
-???
-àlphaflexx.exposure
-alphaflexx.intraday_balances
-
+    - `positions__underlyings` (implemented in core repo)
 
 #### Process
 - `monkey-bi`
-  - InstrumentImport
-  - FxImport
-  - TradeImport
-- `core`
-  -
+    - InstrumentImport
+    - SyncFx daily
+    - TradeImport
+- `alpha-ui`
+    - Account Sync
 
-
-# Daily
+## Daily
 - Exposure
-  - Balance from backend
-  - fx from Postgres
-  - Transfers from `account.transfer`
-  -
-  - TPL60 / Turnover from `alpha.performance_daily`
-  ````sql
-  SELECT trade_date, account_id,
-			 sum(turnover_usd) as turnover,
-       sum(total_tpl60) as tpl60,
-			 sum(trade_count) as trade_count
-    FROM alpha.performance_daily
-    WHERE trade_date>='2025-01-01'
-    GROUP BY  trade_date, account_id
-  ````
-  -
+    - Balance from backend
+    - Fx from Postgres
+    - Transfers from `account.transfer`
+    - TPL60 / Turnover from `alpha.trades`
+
+## Intraday
 
 
 ## Setup
