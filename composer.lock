@@ -4,23 +4,25 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4dc77f62454b3494d16a369fddcc3d82",
+    "content-hash": "19c9a15e0ed0076117c377b723a66eff",
     "packages": [
         {
             "name": "cryptostruct/market-connectors",
-            "version": "3.19.7",
+            "version": "3.20.0",
             "source": {
                 "type": "git",
                 "url": "git@github.com:cryptostruct/market-connectors.git",
-                "reference": "03b3abfb7bba990800e6344beb843f93e93d8ddf"
+                "reference": "e65138d9db38fcfe4532b946648f15a292076031"
             },
             "require": {
                 "ext-curl": "*",
                 "ext-json": "*",
+                "ext-sodium": "*",
                 "guzzlehttp/guzzle": "^7.9",
                 "kornrunner/keccak": "^1.1",
                 "php": "^8.1",
                 "simplito/elliptic-php": "^1.0",
+                "stephenhill/base58": "^1.1",
                 "symfony/dotenv": "^6.4",
                 "textalk/websocket": "^1.6"
             },
@@ -70,7 +72,7 @@
             ],
             "description": "Market Connectors",
             "homepage": "https://cryptostruct.com",
-            "time": "2025-05-23T09:14:48+00:00"
+            "time": "2025-06-11T06:52:30+00:00"
         },
         {
             "name": "graylog2/gelf-php",
@@ -578,16 +580,16 @@
         },
         {
             "name": "nette/database",
-            "version": "v3.2.6",
+            "version": "v3.2.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/database.git",
-                "reference": "cb825ac1cffe1ede98388a9c4e6c4445c26b961d"
+                "reference": "10a7c76e314a06bb5f92d447d82170b5dde7392f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/database/zipball/cb825ac1cffe1ede98388a9c4e6c4445c26b961d",
-                "reference": "cb825ac1cffe1ede98388a9c4e6c4445c26b961d",
+                "url": "https://api.github.com/repos/nette/database/zipball/10a7c76e314a06bb5f92d447d82170b5dde7392f",
+                "reference": "10a7c76e314a06bb5f92d447d82170b5dde7392f",
                 "shasum": ""
             },
             "require": {
@@ -647,22 +649,22 @@
             ],
             "support": {
                 "issues": "https://github.com/nette/database/issues",
-                "source": "https://github.com/nette/database/tree/v3.2.6"
+                "source": "https://github.com/nette/database/tree/v3.2.7"
             },
-            "time": "2025-01-12T15:33:57+00:00"
+            "time": "2025-06-03T05:00:20+00:00"
         },
         {
             "name": "nette/utils",
-            "version": "v4.0.6",
+            "version": "v4.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/utils.git",
-                "reference": "ce708655043c7050eb050df361c5e313cf708309"
+                "reference": "e67c4061eb40b9c113b218214e42cb5a0dda28f2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/utils/zipball/ce708655043c7050eb050df361c5e313cf708309",
-                "reference": "ce708655043c7050eb050df361c5e313cf708309",
+                "url": "https://api.github.com/repos/nette/utils/zipball/e67c4061eb40b9c113b218214e42cb5a0dda28f2",
+                "reference": "e67c4061eb40b9c113b218214e42cb5a0dda28f2",
                 "shasum": ""
             },
             "require": {
@@ -733,9 +735,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nette/utils/issues",
-                "source": "https://github.com/nette/utils/tree/v4.0.6"
+                "source": "https://github.com/nette/utils/tree/v4.0.7"
             },
-            "time": "2025-03-30T21:06:30+00:00"
+            "time": "2025-06-03T04:55:08+00:00"
         },
         {
             "name": "phrity/net-uri",
@@ -1247,11 +1249,11 @@
         },
         {
             "name": "sswrockfunds/core",
-            "version": "0.15.0",
+            "version": "0.15.2",
             "source": {
                 "type": "git",
                 "url": "git@github.com:sswrockfunds/core.git",
-                "reference": "18f0ca20da15fe67e8143b5988aa476c8f46087c"
+                "reference": "93a72e201d408969b65ca7fa795514e66eefd9aa"
             },
             "require": {
                 "cryptostruct/market-connectors": "^3",
@@ -1306,7 +1308,49 @@
                 "proprietary"
             ],
             "description": "Shared Core Library for AlphaRock applications",
-            "time": "2025-05-27T15:36:00+00:00"
+            "time": "2025-06-11T20:07:01+00:00"
+        },
+        {
+            "name": "stephenhill/base58",
+            "version": "v1.1.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/stephen-hill/base58php.git",
+                "reference": "bd9fc19c788160a2f85ba0a19cd800eaf5ba5e99"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/stephen-hill/base58php/zipball/bd9fc19c788160a2f85ba0a19cd800eaf5ba5e99",
+                "reference": "bd9fc19c788160a2f85ba0a19cd800eaf5ba5e99",
+                "shasum": ""
+            },
+            "require-dev": {
+                "athletic/athletic": "~0.1",
+                "phpunit/phpunit": "4.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "StephenHill\\": "src/",
+                    "StephenHill\\Benchmarks\\": "benchmarks/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Stephen Hill",
+                    "email": "stephen@gatekiller.co.uk"
+                }
+            ],
+            "description": "Base58 Encoding and Decoding Library for PHP",
+            "support": {
+                "issues": "https://github.com/stephen-hill/base58php/issues",
+                "source": "https://github.com/stephen-hill/base58php/tree/v1.1.5"
+            },
+            "time": "2019-08-22T16:51:59+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",

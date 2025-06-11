@@ -1,0 +1,90 @@
+#!/usr/bin/env php
+<?php
+
+use AlphaRock\Alpha\QuickSight\Cryptostruct\DailyBalanceImport;
+use AlphaRock\Core\Cli\CliParser;
+use AlphaRock\Core\Common\Time;
+use AlphaRock\Core\Static\MonkeyCluster;
+use AlphaRock\Core\Static\Log;
+use AlphaRock\Core\Database\Query\SQL;
+
+require_once __DIR__ . "/src/alpha-quicksight.php";
+
+/** @var CliParser $Cli */
+$enrichAccounts = $Cli->flagIsSet('accounts');
+$exposure = $Cli->flagIsSet('exposure');
+$trading = $Cli->flagIsSet('trading');
+$transfers = $Cli->flagIsSet('transfers');
+$pnl = $Cli->flagIsSet('pnl');
+
+$start = $Cli->getOption('start', $Cli->getOption('day', Time::today(-1)));
+Time::toDate($start);
+$end = $Cli->getOption('end', $start);
+Time::toDate($end);
+$cutOff = Time::today();
+
+$timeRange = $start===$end ? $start : "$start to $end";
+
+$input = <<<SQL
+    SELECT '$start'::timestamp as "start",
+           '$end'::timestamp as "end",
+           '$cutOff'::timestamp as "cut_off"
+SQL;
+
+// Exposure Data
+if($exposure) {
+    Log::info("Generating Exposure Data for $timeRange");
+    $day = $start;
+    while($day <= $end && $day < $cutOff){
+        DailyBalanceImport::getDailyBalances($day);
+        $day = Time::generate($day, Time::MYSQL_DATE, '+1 day');
+    }
+}
+
+// Trade Data
+if($trading) {
+    Log::info("Generating Trade Aggregation Data for $timeRange");
+    $day = $start;
+    while($day <= $end && $day < $cutOff){
+        $nextDay = Time::generate($day, Time::MYSQL_DATE, "+1 day");
+        $input = <<<SQL
+        SELECT '$day'::timestamp as "start",
+               '$nextDay'::timestamp as "end",
+               '$cutOff'::timestamp as "cut_off"
+        SQL;
+        $sql = SQL::fromFile(__DIR__ . "/../sql/daily/generate_daily_tradingdata.sql", ['{script_input}' => $input]);
+        MonkeyCluster::query($sql);
+
+        $day = $nextDay;
+    }
+}
+
+// Transfers
+if($transfers) {
+    Log::info("Generating Transfer Data for $timeRange");
+    $sql = SQL::fromFile(__DIR__ . "/../sql/daily/generate_daily_transfers.sql", ['{script_input}' => $input]);
+
+    MonkeyCluster::query($sql);
+}
+
+// Account Details
+if($enrichAccounts) {
+    Log::info("Enriching Account Details for $timeRange");
+    $sql = SQL::fromFile(__DIR__ . "/../sql/daily/generate_daily_account_details.sql", ['{script_input}' => $input]);
+    MonkeyCluster::query($sql);
+
+    $sql = SQL::fromFile(__DIR__ . "/../sql/daily/generate_daily_account_exchange_id.sql");
+    MonkeyCluster::query($sql);
+}
+
+// Calculating PnL
+if($pnl || $transfers || $exposure) {
+    if(!$pnl){
+        Log::warning("If Transfers or Exposure are Updated PnL must be updated too");
+    }
+    Log::info("Caclulating PnL for $timeRange");
+    $sql = SQL::fromFile(__DIR__ . "/../sql/daily/calculate_pnl.sql", ['{script_input}' => $input]);
+    MonkeyCluster::query($sql);
+}
+
+Log::info("Done.");

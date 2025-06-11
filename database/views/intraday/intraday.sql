@@ -1,7 +1,7 @@
 DROP MATERIALIZED VIEW IF EXISTS  quicksight.intraday;
 CREATE MATERIALIZED VIEW quicksight.intraday AS
 
-SELECT concat(coalesce(c.trading_day, CURRENT_DATE), ' ', coalesce(c.time_of_day, a.time_of_day))::timestamp AS trading_ts,
+SELECT concat(CURRENT_DATE, ' ', coalesce(c.time_of_day, a.time_of_day))::timestamp AS trading_ts,
        coalesce(c.trading_day, CURRENT_DATE) as trading_day,
        coalesce(c.time_of_day, a.time_of_day) as time_of_day,
        c.updated_ts,
@@ -29,4 +29,4 @@ GROUP BY c.trading_day,
          c.time_of_day, a.time_of_day,
          c.updated_ts;
 
-CREATE UNIQUE INDEX intraday_time_idx ON quicksight.intraday (time_of_day);
+CREATE UNIQUE INDEX intraday_time_idx ON quicksight.intraday (trading_ts, time_of_day);

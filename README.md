@@ -1,6 +1,7 @@
 # AlphaQuickSight 0.2.0
 
 ## Schedule
+
 |                          | Interval | Type               | Scope            | Script Runtime |
 |--------------------------|----------|--------------------|------------------|----------------|
 | tradingdata              | 1min     | Table Delta Update | Account, Minute  | 1 sec          |
@@ -16,9 +17,11 @@
 | ---                      |          |                    |                  |                |
 | clean tradingdata        | daily    |                    |                  |                |
 | clean exposure           | daily    |                    |                  |                |
-
+| ---                      |          |                    |                  |                |
+| daily                    | daily    | Table Delta Update | Account, Day     | 15 sec         |
 
 ## Dependencies
+
 The QuickSight data depends heavily on other scripts and processes to gather and prepare data.
 A full documentation of dependencies should guarantee maintainability and stability.
 
@@ -26,23 +29,35 @@ A full documentation of dependencies should guarantee maintainability and stabil
 - public data
     - `cryptostruct.instruments`
     - `cryptostruct.fx_minute`
+    - `cryptostruct.fx_daily`
 - privata data
-  - `account.current`
-  - `account.history`
-  - `account.transfer`
-  - `alpha.trades`
+    - `account.current`
+    - `account.history`
+    - `account.transfer`
+    - `alpha.trades`
 - private data from CryptoStruct Backend
-  - `positions__underlyings` (implemented in core repo)
-
+    - `positions__underlyings` (implemented in core repo)
 
 #### Process
 - `monkey-bi`
-  - InstrumentImport
-  - FxImport
-  - TradeImport
-- `core`
-  -
+    - InstrumentImport
+    - SyncFx daily
+    - TradeImport
+- `alpha-ui`
+    - Account Sync
 
+## Daily
+- Exposure
+    - from CryptoStruct Backends `positions__underlyings` with `cryptostruct.fx_daily`
+    - Transfers from `account.transfer`
+    - TPL60 / Turnover from `alpha.trades`
+
+## Intraday
+- Trade Data from `alpha.trades`
+- Exposure from CryptoStruct Backends `positions__underlyings` with `cryptostruct.fx_minute`
+- All other views are `MATERIALIZED VIEWS` that are generated on this base data
+  - `_avg7d` only needs to be generated once a day
+  - `intraday_top_instruments` view is only based on the `alpha.trades` table
 
 ## Setup
 ### Access

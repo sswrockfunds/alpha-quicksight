@@ -1,6 +1,13 @@
 ## [Unreleased]
 ### Added
+- Added Daily Import
+  - Exposure
+  - PnL
+  - Trade Data (Turnover, TPL, Trade count)
+  - Transfers
+  - Account mapping
 ### Changed
+- Moved Balance Import classes from to repo
 ### Fixed
 ### Removed
 ### -

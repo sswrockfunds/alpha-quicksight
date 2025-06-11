@@ -34,3 +34,7 @@ GRANT SELECT ON quicksight.intraday TO quicksight_readonly;
 GRANT SELECT ON quicksight.intraday_by_account TO quicksight_readonly;
 GRANT SELECT ON quicksight.intraday_by_exchange TO quicksight_readonly;
 GRANT SELECT ON quicksight.intraday_top_instruments TO quicksight_readonly;
+
+GRANT SELECT ON quicksight.daily TO quicksight_readonly;
+GRANT SELECT ON quicksight.daily_by_exchange TO quicksight_readonly;
+GRANT SELECT ON quicksight.daily_by_account TO quicksight_readonly;
