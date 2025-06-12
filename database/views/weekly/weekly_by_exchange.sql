@@ -27,7 +27,7 @@ SELECT
     sum(h.tpl900_usd) AS tpl900_usd,
     sum(h.trade_count) AS trade_count
 FROM quicksight._history h
-         JOIN cryptostruct.markets m ON h.exchange_id = m.exchange_id
+         LEFT JOIN cryptostruct.markets m ON h.exchange_id = m.exchange_id
          JOIN last_days ld ON h.trading_week = ld.trading_week
 GROUP BY
     h.trading_week,
