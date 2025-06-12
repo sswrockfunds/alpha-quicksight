@@ -22,7 +22,7 @@ SELECT
     sum(h.trade_count) AS trade_count
 FROM
     quicksight._history h
-        JOIN cryptostruct.markets m ON h.exchange_id = m.exchange_id
+    LEFT JOIN cryptostruct.markets m ON h.exchange_id = m.exchange_id
 GROUP BY
     h.trading_month,
     h.trading_week,
