@@ -1,16 +1,20 @@
 ## [Unreleased]
 ### Added
+### Changed
+### Fixed
+### Removed
+### -
+
+
+## [1.0.1] - 2025-06-12 12:35 UTC
+### Added
 - Added sql for monthly and weekly views
 - Added debug and account mapping scripts
-### Changed
 ### Fixed
 - Fixed Duplicate issue in Materialized Views
   - `quicksight.intraday`
   - `quicksight.intraday_by_exchange`
   - `quicksight.intraday_by_account`
-### Removed
-### -
-
 
 ## [1.0.0] - 2025-06-11 20:34 UTC
 ### Added
