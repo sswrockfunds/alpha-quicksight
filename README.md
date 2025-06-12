@@ -1,5 +1,24 @@
 # AlphaQuickSight 1.0.0
 
+## Open
+- No Transfers before 2023
+- Missing Account Mappings
+  - 1002 - 1009
+  - 11003 - 11050
+  - 12001 - 12041
+  - 13000 - 13020
+  - 18000 - 18025
+  - 19000 - 19020
+  - 20100
+- No Trade data before 2023 (difficult)
+- Delete Mappings without Exposure & Trades ??
+````sql
+   SELECT h.trading_day, h.account_id, q.exposure_usd, q.trade_count
+     FROM account.history h
+LEFT JOIN quicksight._history q ON h.account_id=q.account_id AND h.trading_day=q.trading_day
+WHERE q.trade_count IS NULL AND (q.exposure_usd IS null OR q.exposure_usd = 0)
+````
+
 ## Schedule
 
 |                          | Interval | Type               | Scope            | Script Runtime |
@@ -58,6 +77,12 @@ A full documentation of dependencies should guarantee maintainability and stabil
 - All other views are `MATERIALIZED VIEWS` that are generated on this base data
   - `_avg7d` only needs to be generated once a day
   - `intraday_top_instruments` view is only based on the `alpha.trades` table
+
+## Important Note on Old Data
+- Before `2024-01-01` the old database must be used
+- Before `2022-11-16` the underlying positions where archived in `positions__underlyings_archive`
+  - And they have another column schema (no wallet, no cash balance or available balance)
+
 
 ## Setup
 ### Access

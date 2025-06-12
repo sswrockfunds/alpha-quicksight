@@ -63,6 +63,23 @@ class DailyBalanceImport
                   AND latest.exposure=pu.exposure
         SQL;
 
+        $sqlArchive = <<<SQL
+            SELECT pu.account_id,
+               pu.underlying_id,
+               pu.ts,
+               pu.last_seen_ts,
+               pu.amount as margin_balance
+          FROM positions__underlyings_archive pu
+          JOIN (
+                SELECT max(ts) ts, account_id, underlying_id
+                  FROM positions__underlyings_archive
+                 WHERE ts<='$tradingDayNext'
+              GROUP BY account_id, underlying_id
+          ) latest ON latest.ts=pu.ts
+                  AND latest.account_id=pu.account_id
+                  AND latest.underlying_id=pu.underlying_id
+        SQL;
+
         $result = BackendCluster::query($sql);
         $rowCount = $result->getRowCount();
 
