@@ -5,7 +5,8 @@ SELECT concat(coalesce(c.trading_day, a.trading_day), ' ', coalesce(c.time_of_da
        coalesce(c.trading_day, a.trading_day) as trading_day,
        coalesce(c.time_of_day, a.time_of_day) as time_of_day,
        coalesce(c.exchange_id, a.exchange_id) as exchange_id,
-       coalesce(c.updated_ts, CURRENT_TIMESTAMP::timestamp(3)) as updated_ts,
+       m.market,
+       coalesce(max(c.updated_ts), CURRENT_TIMESTAMP::timestamp(3)) as updated_ts,
        -- current_day
        sum(c.turnover) as turnover,
        sum(c.tpl1)     as tpl1,
@@ -28,10 +29,11 @@ FROM quicksight._current_day c
 FULL OUTER JOIN (
     SELECT CURRENT_DATE as trading_day, * FROM quicksight._avg7d
 ) a ON c.trading_day=a.trading_day AND c.time_of_day=a.time_of_day AND c.account_id=a.account_id
+LEFT JOIN cryptostruct.markets m ON m.exchange_id=coalesce(c.exchange_id, a.exchange_id)
 GROUP BY coalesce(c.trading_day, a.trading_day),
          coalesce(c.time_of_day, a.time_of_day),
          coalesce(c.exchange_id, a.exchange_id),
-         coalesce(c.updated_ts, CURRENT_TIMESTAMP::timestamp(3));
+         m.market;
 
 --SELECT exchange_id, trading_ts, time_of_day, count(*)
 --FROM quicksight.intraday_by_exchange
