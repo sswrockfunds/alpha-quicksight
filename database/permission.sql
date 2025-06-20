@@ -8,10 +8,19 @@ GRANT USAGE, CREATE ON SCHEMA quicksight TO quicksight_write;
 GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA quicksight TO quicksight_write;
 ALTER DEFAULT PRIVILEGES IN SCHEMA quicksight GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO quicksight_write;
 
+-- Full access to everything in Performance Schema
+GRANT USAGE, CREATE ON SCHEMA performance TO quicksight_write;
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA performance TO quicksight_write;
+ALTER DEFAULT PRIVILEGES IN SCHEMA performance GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO quicksight_write;
+
 -- READONLY Permissions
 GRANT USAGE ON SCHEMA quicksight TO quicksight_readonly;
 GRANT SELECT ON ALL TABLES IN SCHEMA quicksight TO quicksight_readonly;
 ALTER DEFAULT PRIVILEGES IN SCHEMA quicksight GRANT SELECT ON TABLES TO quicksight_readonly;
+
+GRANT USAGE ON SCHEMA performance TO quicksight_readonly;
+GRANT SELECT ON ALL TABLES IN SCHEMA performance TO quicksight_readonly;
+ALTER DEFAULT PRIVILEGES IN SCHEMA performance GRANT SELECT ON TABLES TO quicksight_readonly;
 
 GRANT USAGE ON SCHEMA cryptostruct TO quicksight_readonly;
 GRANT SELECT ON ALL TABLES IN SCHEMA cryptostruct TO quicksight_readonly;

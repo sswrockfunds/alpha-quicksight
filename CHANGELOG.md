@@ -10,7 +10,7 @@
 ### Added
 - Added view `quicksight.summary` with the latest state of the current day
 
-## [1.0.2] - 2025-06-20 11:51 UTC
+## [1.0.2] - 2025-06-20 09:51 UTC
 ### Changed
 - Updated dependencies
 ### Fixed
@@ -19,9 +19,6 @@
 - Fixed issue of duplication caused of updated_ts
 ### Removed
 ### -
-
-
-## [1.0.2] - 2025-06-20 09:51 UTC
 
 ## [1.0.1] - 2025-06-12 12:35 UTC
 ### Added
