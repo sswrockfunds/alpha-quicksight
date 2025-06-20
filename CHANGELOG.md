@@ -8,8 +8,6 @@
 
 
 ## [1.0.2] - 2025-06-20 11:51 UTC
-### Added
-- Added view `quicksight.summary` with the latest state of the current day
 ### Changed
 - Updated dependencies
 ### Fixed
