@@ -21,7 +21,7 @@ CREATE TABLE performance.minute_avg7d
     tpl300_avg7d_cum   numeric(20, 2),
     pnl_avg7d_cum      numeric(20, 2),
     updated_ts         timestamp(3),
-    PRIMARY KEY (ref_day, account_id)
+    PRIMARY KEY (ref_day, account_id, time_of_day)
 );
 
 CREATE INDEX minute_avg7d_by_account_idx ON performance.minute_avg7d (ref_day, account_id, time_of_day);
