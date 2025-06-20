@@ -1,11 +1,14 @@
 ## [Unreleased]
 ### Added
-- Added view `quicksight.summary` with the latest state of the current day
 ### Changed
 ### Fixed
 ### Removed
 ### -
 
+
+## [1.0.3] - 2025-06-20 13:07 UTC
+### Added
+- Added view `quicksight.summary` with the latest state of the current day
 
 ## [1.0.2] - 2025-06-20 11:51 UTC
 ### Changed
