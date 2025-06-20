@@ -15,6 +15,7 @@ $fileMap = [
     "Intraday Performance by Exchange" => "intraday/refresh_intraday_by_exchange.sql",
     "Intraday Performance by Account" => "intraday/refresh_intraday_by_account.sql",
     "Intraday Top 100 Instruments" => "intraday/refresh_intraday_top_instruments.sql",
+    "Intraday All Instruments" => "intraday/refresh_intraday_instruments.sql",
 ];
 
 foreach ($fileMap as $job => $file) {
