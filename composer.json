@@ -16,7 +16,8 @@
     "minimum-stability": "beta",
     "require": {
         "php": "^8.4",
-        "sswrockfunds/core": "^0.15.2"
+        "sswrockfunds/core": "^0.15.2",
+        "shuchkin/simplexlsx" : "1.1.13"
     },
     "scripts": {
         "core": "rsync -azvch --group \"$HOME/git/core/php/src\" \"$HOME/git/alpha-quicksight/vendor/sswrockfunds/core/php\"",

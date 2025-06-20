@@ -15,7 +15,7 @@ top_instruments as (
     FROM alpha.trades
     WHERE trade_ts>=CURRENT_DATE
     GROUP BY instrument_id
-    ORDER BY sum(turnover_usd) DESC
+    ORDER BY sum(tpl60_usd) DESC
     LIMIT 100
 )
 

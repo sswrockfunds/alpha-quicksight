@@ -1,0 +1,8 @@
+#!/usr/bin/env php
+<?php
+
+use AlphaRock\Alpha\QuickSight\Accounts\AccountImporter;
+
+require_once __DIR__ . "/src/alpha-quicksight.php";
+
+AccountImporter::import();

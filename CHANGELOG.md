@@ -1,7 +1,19 @@
 ## [Unreleased]
 ### Added
+- Added view `quicksight.summary` with the latest state of the current day
 ### Changed
 ### Fixed
+### Removed
+### -
+
+
+## [1.0.2] - 2025-06-20 11:51 UTC
+### Changed
+- Updated dependencies
+### Fixed
+- Fixed missing `market` column to intraday_by_exchange
+- Fixed select top instruments by `tpl60` instead of turnover
+- Fixed issue of duplication caused of updated_ts
 ### Removed
 ### -
 
