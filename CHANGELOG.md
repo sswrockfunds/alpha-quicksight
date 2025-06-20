@@ -1,6 +1,12 @@
 ## [Unreleased]
 ### Added
+- Added view `quicksight.intraday_instruments` with data of all instruments traded in that day
 ### Changed
+- Move base data to schema `performance`
+  - `performance.minute` is filled from base tables
+    - `performance.minute_exposure`
+    - `performance.minute_tradingdata`
+    - `performance.minute_avg7d`
 ### Fixed
 ### Removed
 ### -
