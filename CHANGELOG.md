@@ -6,6 +6,8 @@
 ### -
 
 
+## [1.0.2] - 2025-06-20 09:51 UTC
+
 ## [1.0.1] - 2025-06-12 12:35 UTC
 ### Added
 - Added sql for monthly and weekly views
