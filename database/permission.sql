@@ -29,6 +29,14 @@ GRANT USAGE ON SCHEMA account TO quicksight_readonly;
 GRANT SELECT ON ALL TABLES IN SCHEMA account TO quicksight_readonly;
 ALTER DEFAULT PRIVILEGES IN SCHEMA account GRANT SELECT ON TABLES TO quicksight_readonly;
 
+
+-- Acccount write
+GRANT USAGE ON SCHEMA account TO quicksight_admin;
+GRANT SELECT, INSERT, UPDATE, DELETE ON account.current TO quicksight_admin;
+GRANT SELECT, INSERT, UPDATE, DELETE ON account.history TO quicksight_admin;
+ALTER DEFAULT PRIVILEGES IN SCHEMA account GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO quicksight_admin;
+
+
 -- Permissions for views
 GRANT SELECT ON quicksight.intraday TO quicksight_readonly;
 GRANT SELECT ON quicksight.intraday_by_account TO quicksight_readonly;

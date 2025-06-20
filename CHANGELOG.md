@@ -1,5 +1,6 @@
 ## [Unreleased]
 ### Added
+- Added Account import (moved from `alpha-ui`)
 ### Changed
 - Updated dependencies
 ### Fixed

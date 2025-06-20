@@ -4,15 +4,15 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "19c9a15e0ed0076117c377b723a66eff",
+    "content-hash": "329301d2f9bd1394709fd08e9cd8a396",
     "packages": [
         {
             "name": "cryptostruct/market-connectors",
-            "version": "3.20.0",
+            "version": "3.20.4",
             "source": {
                 "type": "git",
                 "url": "git@github.com:cryptostruct/market-connectors.git",
-                "reference": "e65138d9db38fcfe4532b946648f15a292076031"
+                "reference": "f1a8d64d6eb67c4058c7bf59a85e0e1c4dacd8cf"
             },
             "require": {
                 "ext-curl": "*",
@@ -72,7 +72,7 @@
             ],
             "description": "Market Connectors",
             "homepage": "https://cryptostruct.com",
-            "time": "2025-06-11T06:52:30+00:00"
+            "time": "2025-06-18T08:47:28+00:00"
         },
         {
             "name": "graylog2/gelf-php",
@@ -1099,6 +1099,60 @@
                 "source": "https://github.com/ralouphie/getallheaders/tree/develop"
             },
             "time": "2019-03-08T08:55:37+00:00"
+        },
+        {
+            "name": "shuchkin/simplexlsx",
+            "version": "1.1.13",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/shuchkin/simplexlsx.git",
+                "reference": "71a5e3d40d14e33161f8a40b3fd02de542218ef0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/shuchkin/simplexlsx/zipball/71a5e3d40d14e33161f8a40b3fd02de542218ef0",
+                "reference": "71a5e3d40d14e33161f8a40b3fd02de542218ef0",
+                "shasum": ""
+            },
+            "require": {
+                "ext-libxml": "*",
+                "ext-mbstring": "*",
+                "ext-simplexml": "*",
+                "ext-zlib": "*",
+                "php": ">=5.5"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/SimpleXLSX.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sergey Shuchkin (SMSPILOT)",
+                    "email": "sergey.shuchkin@gmail.com",
+                    "homepage": "https://github.com/shuchkin"
+                }
+            ],
+            "description": "Parse and retrieve data from Excel XLSx files. MS Excel 2007 workbooks PHP reader.",
+            "homepage": "https://github.com/shuchkin/simplexlsx",
+            "keywords": [
+                "backend",
+                "excel",
+                "parser",
+                "php",
+                "reader",
+                "xlsx"
+            ],
+            "support": {
+                "issues": "https://github.com/shuchkin/simplexlsx/issues",
+                "source": "https://github.com/shuchkin/simplexlsx/tree/1.1.13"
+            },
+            "time": "2024-12-21T13:32:13+00:00"
         },
         {
             "name": "simplito/bigint-wrapper-php",
