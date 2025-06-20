@@ -13,7 +13,7 @@ WITH base AS (
         sum(coalesce(t.tpl1_usd,0))     as tpl1_usd,
         sum(coalesce(t.tpl60_usd,0))    as tpl60_usd,
         sum(coalesce(t.tpl300_usd,0))   as tpl300_usd,
-  		  sum(coalesce(e.pnl_usd,0))      as pnl_usd
+  		  sum(coalesce(e.pnl_usd,0))    as pnl_usd
     FROM quicksight._tradingdata t
     FULL OUTER JOIN quicksight._exposure e ON t.account_id=e.account_id AND t.trading_minute=e.trading_minute
     WHERE coalesce(t.trading_day,e.trading_day) >= CURRENT_DATE - INTERVAL '7 days'
