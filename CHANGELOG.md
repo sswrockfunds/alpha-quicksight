@@ -1,7 +1,11 @@
 ## [Unreleased]
 ### Added
 ### Changed
+- Updated dependencies
 ### Fixed
+- Fixed missing `market` column to intraday_by_exchange
+- Fixed select top instruments by `tpl60` instead of turnover
+- Fixed issue of duplication caused of updated_ts
 ### Removed
 ### -
 

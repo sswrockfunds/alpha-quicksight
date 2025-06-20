@@ -4,7 +4,7 @@ CREATE MATERIALIZED VIEW quicksight.intraday AS
 SELECT concat(coalesce(c.trading_day, a.trading_day), ' ', coalesce(c.time_of_day, a.time_of_day))::timestamp AS trading_ts,
        coalesce(c.trading_day, a.trading_day) as trading_day,
        coalesce(c.time_of_day, a.time_of_day) as time_of_day,
-       coalesce(c.updated_ts, CURRENT_TIMESTAMP::timestamp(3)) as updated_ts,
+       coalesce(max(c.updated_ts), CURRENT_TIMESTAMP::timestamp(3)) as updated_ts,
        -- current_day
        sum(c.turnover) as turnover,
        sum(c.tpl1)     as tpl1,
@@ -28,8 +28,7 @@ FROM quicksight._current_day c
     SELECT CURRENT_DATE as trading_day, * FROM quicksight._avg7d
 ) a ON c.trading_day=a.trading_day AND c.time_of_day=a.time_of_day AND c.account_id=a.account_id
 GROUP BY coalesce(c.trading_day, a.trading_day),
-         coalesce(c.time_of_day, a.time_of_day),
-         coalesce(c.updated_ts, CURRENT_TIMESTAMP::timestamp(3));
+         coalesce(c.time_of_day, a.time_of_day);
 
 --SELECT trading_ts, time_of_day, count(*)
 --FROM quicksight.intraday

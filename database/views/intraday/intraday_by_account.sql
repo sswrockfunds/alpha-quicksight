@@ -6,7 +6,7 @@ SELECT concat(coalesce(c.trading_day, a.trading_day), ' ', coalesce(c.time_of_da
        coalesce(c.time_of_day, a.time_of_day) as time_of_day,
        coalesce(c.account_id, a.account_id) as account_id,
        coalesce(c.exchange_id, a.exchange_id) as exchange_id,
-       coalesce(c.updated_ts, CURRENT_TIMESTAMP::timestamp(3)) as updated_ts,
+       coalesce(max(c.updated_ts), CURRENT_TIMESTAMP::timestamp(3)) as updated_ts,
        -- current_day
        sum(c.turnover) as turnover,
        sum(c.tpl1)     as tpl1,
@@ -32,7 +32,6 @@ FULL OUTER JOIN (
 GROUP BY coalesce(c.trading_day, a.trading_day),
          coalesce(c.time_of_day, a.time_of_day),
          coalesce(c.account_id,  a.account_id),
-         coalesce(c.exchange_id, a.exchange_id),
-         coalesce(c.updated_ts, CURRENT_TIMESTAMP::timestamp(3));
+         coalesce(c.exchange_id, a.exchange_id);
 
 CREATE UNIQUE INDEX intraday_by_account_idx ON quicksight.intraday_by_account (account_id, trading_ts, time_of_day);
