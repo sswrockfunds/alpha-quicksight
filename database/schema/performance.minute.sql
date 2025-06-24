@@ -1,16 +1,15 @@
--- DROP TABLE IF EXISTS performance.minute_avg7d;
-
+DROP TABLE performance.minute;
 CREATE TABLE performance.minute
 (
     trading_month  VARCHAR(8),
     trading_week   VARCHAR(8),
     trading_day    DATE,
-    trading_hour   TIMESTAMP,
-    trading_minute TIMESTAMP,
+    trading_hour   TIMESTAMP(0),
+    trading_minute TIMESTAMP(0),
     time_of_day    TIME(0),
 
-    exchange_id        text,
-    account_id         text,
+    exchange_id        int,
+    account_id         int,
 
     turnover           numeric(20, 2),
     tpl1               numeric(20, 2),
@@ -37,8 +36,8 @@ CREATE TABLE performance.minute
     pnl_avg7d_cum      numeric(20, 2),
 
     updated_ts         timestamp(3),
-    PRIMARY KEY (trading_day_min, account_id)
+    PRIMARY KEY (trading_day, trading_minute, account_id)
 );
 
-CREATE INDEX minute_by_account_idx ON performance.minute_avg7d (trading_day_min, account_id);
-CREATE INDEX minute__by_exchange_idx ON performance.minute_avg7d (trading_day_min, exchange_id);
+CREATE INDEX minute_by_account_idx ON performance.minute (trading_minute, account_id);
+CREATE INDEX minute_by_exchange_idx ON performance.minute (trading_minute, exchange_id);

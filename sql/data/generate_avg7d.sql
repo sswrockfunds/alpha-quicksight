@@ -28,6 +28,7 @@ GROUP BY coalesce(t.time_of_day,e.time_of_day),
     avg7d AS (
 SELECT
     p.ref_day,
+    (p.ref_day + b.time_of_day)::timestamp(0) as ref_trading_minute,
     b.time_of_day,
     MIN(b.trading_day) as trading_day_min,
     MAX(b.trading_day) as trading_day_max,
@@ -48,6 +49,7 @@ ORDER BY b.exchange_id, b.account_id, b.time_of_day asc
 
 INSERT INTO performance.minute_avg7d (
     ref_day,
+    ref_trading_minute,
     time_of_day,
     trading_day_min,
     trading_day_max,
@@ -69,6 +71,7 @@ INSERT INTO performance.minute_avg7d (
 )
 SELECT
     ref_day,
+    ref_trading_minute,
     time_of_day,
     trading_day_min,
     trading_day_max,
@@ -88,7 +91,7 @@ SELECT
     SUM(pnl)      OVER (PARTITION BY account_id ORDER BY time_of_day) AS pnl_avg7d_cum,
         CURRENT_TIMESTAMP::timestamp(3) as updated_ts
 FROM avg7d
-    ON CONFLICT (ref_day, account_id, time_of_day)
+    ON CONFLICT (ref_trading_minute, account_id)
 DO UPDATE SET
     turnover_avg7d     = EXCLUDED.turnover_avg7d,
            tpl1_avg7d         = EXCLUDED.tpl1_avg7d,
