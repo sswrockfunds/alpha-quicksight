@@ -1,8 +1,8 @@
 DROP MATERIALIZED VIEW IF EXISTS  quicksight.intraday;
 CREATE MATERIALIZED VIEW quicksight.intraday AS
 
-SELECT concat(coalesce(c.trading_day, a.trading_day), ' ', coalesce(c.time_of_day, a.time_of_day))::timestamp AS trading_ts,
-       coalesce(c.trading_day, a.trading_day) as trading_day,
+SELECT concat(coalesce(c.trading_day, a.ref_day), ' ', coalesce(c.time_of_day, a.time_of_day))::timestamp AS trading_ts,
+    coalesce(c.trading_day, a.ref_day) as trading_day,
        coalesce(c.time_of_day, a.time_of_day) as time_of_day,
        coalesce(max(c.updated_ts), CURRENT_TIMESTAMP::timestamp(3)) as updated_ts,
        -- current_day
@@ -24,10 +24,8 @@ SELECT concat(coalesce(c.trading_day, a.trading_day), ' ', coalesce(c.time_of_da
        sum(a.tpl300_avg7d_cum)   as tpl300_avg7d_cum,
        sum(a.pnl_avg7d_cum)      as pnl_avg7d_cum
 FROM quicksight._current_day c
-         FULL OUTER JOIN (
-    SELECT CURRENT_DATE as trading_day, * FROM quicksight._avg7d
-) a ON c.trading_day=a.trading_day AND c.time_of_day=a.time_of_day AND c.account_id=a.account_id
-GROUP BY coalesce(c.trading_day, a.trading_day),
+FULL OUTER JOIN performance.minute_avg7d a ON c.trading_day=a.ref_day AND c.time_of_day=a.time_of_day AND c.account_id=a.account_id
+GROUP BY coalesce(c.trading_day, a.ref_day),
          coalesce(c.time_of_day, a.time_of_day);
 
 --SELECT trading_ts, time_of_day, count(*)
