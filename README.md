@@ -15,7 +15,7 @@
 ````sql
    SELECT h.trading_day, h.account_id, q.exposure_usd, q.trade_count
      FROM account.history h
-LEFT JOIN quicksight._history q ON h.account_id=q.account_id AND h.trading_day=q.trading_day
+LEFT JOIN performance.daily q ON h.account_id=q.account_id AND h.trading_day=q.trading_day
 WHERE q.trade_count IS NULL AND (q.exposure_usd IS null OR q.exposure_usd = 0)
 ````
 

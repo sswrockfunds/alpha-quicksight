@@ -41,7 +41,7 @@ with script_input as(
      )
 
 
-INSERT INTO quicksight._tradingdata
+INSERT INTO performance.minute_tradingdata
         SELECT * FROM insert_data
 ON CONFLICT (trading_minute, account_id)
 DO UPDATE SET
