@@ -6,7 +6,7 @@ account_data as (
     JOIN script_input p ON a.trading_day >= p.start AND a.trading_day <= p.end
 )
 
-UPDATE quicksight._history h
+UPDATE performance.daily h
 SET exchange_id = a.exchange_id,
     account_id = a.account_id,
     account_type = a.account_type,

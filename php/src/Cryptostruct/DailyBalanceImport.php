@@ -116,7 +116,7 @@ class DailyBalanceImport
 
         foreach (array_chunk(array_values($insert), 5000) as $chunk) {
             MonkeyCluster::query(
-                "INSERT INTO quicksight._history",
+                "INSERT INTO performance.daily",
                 $chunk,
                 "ON CONFLICT(trading_day, account_id) DO UPDATE SET
                     exposure_usd = EXCLUDED.exposure_usd,

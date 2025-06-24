@@ -5,7 +5,7 @@ WITH last_days AS (
     SELECT
         trading_week,
         max(trading_day) AS last_trading_day
-    FROM quicksight._history
+    FROM performance.daily
     GROUP BY trading_week
 )
 SELECT
@@ -25,7 +25,7 @@ SELECT
     sum(h.tpl300_usd) AS tpl300_usd,
     sum(h.tpl900_usd) AS tpl900_usd,
     sum(h.trade_count) AS trade_count
-FROM quicksight._history h
+FROM performance.daily h
          LEFT JOIN cryptostruct.markets m ON h.exchange_id = m.exchange_id
          JOIN last_days ld ON h.trading_week = ld.trading_week
 GROUP BY

@@ -42,7 +42,7 @@ FROM deposit_data d
     AND d.account_id=w.account_id
     )
 
-UPDATE quicksight._history h
+UPDATE performance.daily h
 SET deposit_usd = c.deposit_usd,
     withdraw_usd = c.withdraw_usd
     FROM cashflow c
