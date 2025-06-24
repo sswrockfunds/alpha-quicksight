@@ -27,7 +27,7 @@ SQL;
 
 $monkeySQL = <<<SQL
     SELECT account_id, round(exposure_usd) as exposure_usd
-    FROM quicksight._history
+    FROM performance.daily
     WHERE trading_day='$ts'
 SQL;
 

@@ -13,7 +13,7 @@ WITH
         SELECT e.exchange_id,
                sum(e.balance_usd) as exposure_usd,
                sum(e.crypto_usd) as crypto_exposure_usd
-        FROM quicksight._exposure e
+        FROM performance.minute_exposure e
                  JOIN latest_data l ON e.exchange_id=l.exchange_id AND e.trading_minute=l.trading_ts
         GROUP BY e.exchange_id
     )

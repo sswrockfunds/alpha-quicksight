@@ -1,5 +1,5 @@
 
-CREATE TABLE quicksight._history
+CREATE TABLE performance.daily
 (
     -- TIME DIMENSIONS
     trading_month       VARCHAR(8),  -- 2025-05
@@ -36,6 +36,6 @@ CREATE TABLE quicksight._history
     PRIMARY KEY (trading_day, account_id)
 );
 
-CREATE INDEX performance_history_month_idx ON quicksight._history (trading_month, account_id);
-CREATE INDEX performance_history_week_idx ON quicksight._history (trading_week, account_id);
-CREATE INDEX performance_history_num_idx ON quicksight._history (year_num, month_num, day_num, account_id);
+CREATE INDEX performance_daily_month_idx ON performance.daily (trading_month, account_id);
+CREATE INDEX performance_daily_week_idx  ON performance.daily (trading_week, account_id);
+CREATE INDEX performance_daily_num_idx   ON performance.daily (year_num, month_num, day_num, account_id);

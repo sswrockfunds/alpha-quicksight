@@ -11,8 +11,8 @@ require_once __DIR__ . "/src/alpha-quicksight.php";
 
 // Replacements
 /** @var CliParser $Cli */
-$start = $Cli->getOption('start', Time::generate('32 minutes ago', Time::MYSQL_MINUTE));
-$end = $Cli->getOption('end', Time::generate('2 minutes ago', Time::MYSQL_MINUTE));
+$start = $Cli->getOption('start', Time::generate('34 minutes ago', Time::MYSQL_MINUTE));
+$end = $Cli->getOption('end', Time::generate('4 minutes ago', Time::MYSQL_MINUTE));
 
 Log::info("Updating full day TradeData for $start to $end");
 $scriptInput = <<<SQL

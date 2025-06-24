@@ -17,7 +17,7 @@ SQL;
 
 $monkeySQL = <<<SQL
     SELECT m.trading_day as day, round(sum(m.exposure_usd)) as exposure_usd
-    FROM quicksight._history m
+    FROM performance.daily m
    -- WHERE m.trading_day>='2024-01-01'
     GROUP BY m.trading_day
 SQL;
