@@ -41,3 +41,5 @@ CREATE TABLE performance.minute
 
 CREATE INDEX minute_by_account_idx ON performance.minute (trading_minute, account_id);
 CREATE INDEX minute_by_exchange_idx ON performance.minute (trading_minute, exchange_id);
+CREATE INDEX minute_day_by_account_idx ON performance.minute (trading_day, account_id);
+CREATE INDEX minute_day_by_exchange_idx ON performance.minute (trading_day, exchange_id);

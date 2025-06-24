@@ -20,7 +20,27 @@ $input = <<<SQL
            '$next'::TIMESTAMP(0) as "end_ts"
 SQL;
 
-Log::debug("Aggregating Minute data for $day (7davg, tradingdata, exposure");;
+Log::info("Aggregating Minute data for $day (avg7d, tradingdata, exposure)");;
 $result = MonkeyCluster::query(SQL::fromFile(__DIR__ . "/../sql/data/generate_minute.sql", ['{script_input}' => $input]));
+$queryTimeSec = round($result->getTime(), 3);
 $rowCount = $result->getRowCount();
-Log::debug("Created Aggregate Minute data $day ($rowCount rows)");;
+Log::info("Created Aggregate Minute data $day ($rowCount rows)");;
+Log::debug("$queryTimeSec sec");
+
+// Script Definition
+$fileMap = [
+    "Intraday Performance" => "intraday/refresh_intraday.sql",
+    "Intraday Performance by Exchange" => "intraday/refresh_intraday_by_exchange.sql",
+    "Intraday Performance by Account" => "intraday/refresh_intraday_by_account.sql",
+];
+
+foreach ($fileMap as $job => $file) {
+    $sql = SQL::fromFile( __DIR__ . "/../sql/" . $file);
+
+    Log::info("Refreshing Materialized View: $job");
+    $result = MonkeyCluster::query($sql);
+    $queryTimeSec = round($result->getTime(), 3);
+    $rowCount = $result->getRowCount();
+
+    Log::debug("$queryTimeSec sec");
+}

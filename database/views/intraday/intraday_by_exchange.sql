@@ -1,41 +1,33 @@
 DROP MATERIALIZED VIEW IF EXISTS quicksight.intraday_by_exchange;
 CREATE MATERIALIZED VIEW quicksight.intraday_by_exchange AS
 
-SELECT concat(coalesce(c.trading_day, a.ref_day), ' ', coalesce(c.time_of_day, a.time_of_day))::timestamp AS trading_ts,
-       coalesce(c.trading_day, a.ref_day) as trading_day,
-       coalesce(c.time_of_day, a.time_of_day) as time_of_day,
-       coalesce(c.exchange_id, a.exchange_id) as exchange_id,
+SELECT p.trading_minute AS trading_ts,
+       p.trading_day,
+       p.time_of_day,
+       p.exchange_id,
        m.market,
-       coalesce(max(c.updated_ts), CURRENT_TIMESTAMP::timestamp(3)) as updated_ts,
+       max(p.updated_ts) as updated_ts,
        -- current_day
-       sum(c.turnover) as turnover,
-       sum(c.tpl1)     as tpl1,
-       sum(c.tpl60)    as tpl30,
-       sum(c.tpl300)   as tpl60,
-       sum(c.pnl)      as pnl,
+       sum(p.turnover) as turnover,
+       sum(p.tpl1)     as tpl1,
+       sum(p.tpl60)    as tpl30,
+       sum(p.tpl300)   as tpl60,
+       sum(p.pnl)      as pnl,
        -- current_day cummulated
-       sum(c.turnover_cum) as turnover_cum,
-       sum(c.tpl1_cum)     as tpl1_cum,
-       sum(c.tpl60_cum)    as tpl60_cum,
-       sum(c.tpl300_cum)   as tpl300_cum,
-       sum(c.pnl_cum)      as pnl_cum,
+       sum(p.turnover_cum) as turnover_cum,
+       sum(p.tpl1_cum)     as tpl1_cum,
+       sum(p.tpl60_cum)    as tpl60_cum,
+       sum(p.tpl300_cum)   as tpl300_cum,
+       sum(p.pnl_cum)      as pnl_cum,
        -- avg7d cummulated
-       sum(a.turnover_avg7d_cum) as turnover_avg7d_cum,
-       sum(a.tpl1_avg7d_cum)     as tpl1_avg7d_cum,
-       sum(a.tpl60_avg7d_cum)    as tpl60_avg7d_cum,
-       sum(a.tpl300_avg7d_cum)   as tpl300_avg7d_cum,
-       sum(a.pnl_avg7d_cum)      as pnl_avg7d_cum
-FROM quicksight._current_day c
-FULL OUTER JOIN performance.minute_avg7d a ON c.trading_day=a.ref_day AND c.time_of_day=a.time_of_day AND c.account_id=a.account_id
-LEFT JOIN cryptostruct.markets m ON m.exchange_id=coalesce(c.exchange_id, a.exchange_id)
-GROUP BY coalesce(c.trading_day, a.ref_day),
-         coalesce(c.time_of_day, a.time_of_day),
-         coalesce(c.exchange_id, a.exchange_id),
-         m.market;
+       sum(p.turnover_avg7d_cum) as turnover_avg7d_cum,
+       sum(p.tpl1_avg7d_cum)     as tpl1_avg7d_cum,
+       sum(p.tpl60_avg7d_cum)    as tpl60_avg7d_cum,
+       sum(p.tpl300_avg7d_cum)   as tpl300_avg7d_cum,
+       sum(p.pnl_avg7d_cum)      as pnl_avg7d_cum
+FROM performance.minute p
+LEFT JOIN cryptostruct.markets m ON m.exchange_id=p.exchange_id
+WHERE p.trading_day=CURRENT_DATE
+GROUP BY p.trading_minute, p.exchange_id, m.market, p.trading_day, p.time_of_day;
 
---SELECT exchange_id, trading_ts, time_of_day, count(*)
---FROM quicksight.intraday_by_exchange
---GROUP BY 1,2,3
---HAVING count(*) > 1;
-
-CREATE UNIQUE INDEX intraday_by_exchange_idx ON quicksight.intraday_by_exchange ( exchange_id, trading_ts, time_of_day);
+CREATE UNIQUE INDEX intraday_by_exchange_idx ON quicksight.intraday_by_exchange ( exchange_id, trading_ts);
