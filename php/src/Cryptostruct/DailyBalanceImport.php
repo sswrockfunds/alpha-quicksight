@@ -61,6 +61,8 @@ class DailyBalanceImport
                   AND latest.underlying_id=pu.underlying_id
                   AND latest.wallet=pu.wallet
                   AND latest.exposure=pu.exposure
+          WHERE abs(pu.margin_balance) > 0
+            AND pu.underlying_id > 0
         SQL;
 
         $sqlArchive = <<<SQL
