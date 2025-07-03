@@ -15,10 +15,16 @@ $fileMap = [
     "MinuteTable"   => "data/clean_minute.sql",
 ];
 
+
+
 foreach ($fileMap as $job => $file) {
+    // DB Overload Protection
+    MonkeyCluster::isUnderLoad(30, 3);
+    MonkeyCluster::checkDbPerformance();
+
     $sql = SQL::fromFile( __DIR__ . "/../sql/" . $file);
 
-    Log::info("Deleting old entires: $job");
+    Log::info("Deleting old entries: $job");
     $result = MonkeyCluster::query($sql);
     $queryTimeSec = round($result->getTime(), 3);
     $rowCount = $result->getRowCount();

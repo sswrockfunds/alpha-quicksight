@@ -20,6 +20,9 @@ $fileMap = [
 ];
 
 foreach ($fileMap as $job => $file) {
+    // DB Overload Protection
+    MonkeyCluster::checkDbPerformance();
+
     $sql = SQL::fromFile( __DIR__ . "/../sql/" . $file);
 
     Log::info("Refreshing Materialized View: $job");

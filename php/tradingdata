@@ -19,11 +19,15 @@ $scriptInput = <<<SQL
     SELECT CURRENT_TIMESTAMP::timestamp as "now",
            CURRENT_DATE::timestamp as "today",
            '$start'::timestamp as "start",
-           '$end'::timestamp as "end"
+           '$end'::timestamp as "end",
+           'quicksight|tradingdata' as "script_tag"
 SQL;
 
 Log::debug("\n$scriptInput");
 
+// DB Overload Protection
+MonkeyCluster::getActiveQueryCount('quicksight|tradingdata', 1);
+MonkeyCluster::checkDbPerformance();
 
 $sql = SQL::fromFile(
     filepath: __DIR__ . "/../sql/data/generate_tradingdata.sql",

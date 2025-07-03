@@ -14,11 +14,16 @@ $day = $Cli->getOption('day', Time::today());
 Time::toDate($day);
 $next = Time::generate($day, Time::MYSQL_DATE, '+1 day');
 
-
 $input = <<<SQL
     SELECT '$day'::TIMESTAMP(0) as "start_ts",
-           '$next'::TIMESTAMP(0) as "end_ts"
+           '$next'::TIMESTAMP(0) as "end_ts",
+           'quicksight|min' as "script_tag"
 SQL;
+
+// DB Overload Protection
+MonkeyCluster::getActiveQueryCount('quicksight|min', 1);
+MonkeyCluster::getActiveQueriesForUser(null, 50);
+MonkeyCluster::checkDbPerformance();
 
 Log::debug($input);
 Log::info("Aggregating Minute data for $day (avg7d, tradingdata, exposure)");;

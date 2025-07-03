@@ -20,8 +20,14 @@ $week= Time::generate($day, Time::ISO_WEEK);
 $input = <<<SQL
      SELECT '$day'::date as "ref_day",
      '$week' as "ref_week",
-     '$month' as "ref_month"
+     '$month' as "ref_month",
+     'quicksight|avg7d' as "script_tag"
 SQL;
+
+// DB Overload Protection
+MonkeyCluster::getActiveQueryCount('quicksight|avg7d', 1);
+MonkeyCluster::isUnderLoad(90, 5);
+MonkeyCluster::checkDbPerformance();
 
 Log::debug("Generating 7d avg for reference day $day");;
 $result = MonkeyCluster::query(SQL::fromFile(__DIR__ . "/../sql/data/generate_avg7d.sql", ['{script_input}' => $input]));

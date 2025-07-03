@@ -1,3 +1,9 @@
+## Todo
+- migrate history table
+- edit generators
+- generate avg7d
+- clean avg_7d
+
 ## [Unreleased]
 ### Added
 - Added view `quicksight.intraday_instruments` with data of all instruments traded in that day
