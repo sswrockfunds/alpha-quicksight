@@ -24,6 +24,8 @@ $input = <<<SQL
      'quicksight|avg7d' as "script_tag"
 SQL;
 
+Log::debug($input);
+
 // DB Overload Protection
 MonkeyCluster::getActiveQueryCount('quicksight|avg7d', 1);
 MonkeyCluster::isUnderLoad(90, 5);

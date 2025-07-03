@@ -57,11 +57,10 @@ SELECT
     ROUND(AVG(b.pnl_usd), 2)      AS pnl
 FROM base b
 CROSS JOIN script_input p
-GROUP BY b.trading_month,
-    p.ref_month,
-    p.ref_week,
-    p.ref_day,
-    b.time_of_day, b.exchange_id, b.account_id
+GROUP BY p.ref_month,
+         p.ref_week,
+         p.ref_day,
+         b.time_of_day, b.exchange_id, b.account_id
 ORDER BY b.exchange_id, b.account_id, b.time_of_day asc
     )
 
