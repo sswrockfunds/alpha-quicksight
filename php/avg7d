@@ -13,9 +13,14 @@ require_once __DIR__ . "/src/alpha-quicksight.php";
 $day = $Cli->getOption('day', Time::today());
 Time::toDate($day);
 
+$month = Time::generate($day, Time::ISO_MONTH);
+$week= Time::generate($day, Time::ISO_WEEK);
+
 
 $input = <<<SQL
-    SELECT '$day'::date as "ref_day"
+     SELECT '$day'::date as "ref_day",
+     '$week' as "ref_week",
+     '$month' as "ref_month"
 SQL;
 
 Log::debug("Generating 7d avg for reference day $day");;

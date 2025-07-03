@@ -14,9 +14,13 @@ require_once __DIR__ . "/src/alpha-quicksight.php";
 /** @var CliParser $Cli */
 $n = $Cli->getOption('n', 61);
 $lastTs = MonkeyCluster::fetchField("SELECT max(trading_minute) FROM performance.minute_exposure") ?? Time::today(-8);
+$lastTs = $Cli->getOption('start', $lastTs);
+
+Time::toFormat($lastTs, Time::MYSQL_MINUTE);
 
 MinuteBalanceImport::balanceForTimestamp($lastTs, $n);
 
+Log::info("Calculating PnL");;
 $result = MonkeyCluster::query(SQL::fromFile(__DIR__ . "/../sql/data/generate_exposure_pnl.sql"));
 $rowCount = $result->getRowCount();
 Log::debug("Updated $rowCount exposure sets with PnL");;

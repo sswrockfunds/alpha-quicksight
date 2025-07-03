@@ -20,6 +20,7 @@ $input = <<<SQL
            '$next'::TIMESTAMP(0) as "end_ts"
 SQL;
 
+Log::debug($input);
 Log::info("Aggregating Minute data for $day (avg7d, tradingdata, exposure)");;
 $result = MonkeyCluster::query(SQL::fromFile(__DIR__ . "/../sql/data/generate_minute.sql", ['{script_input}' => $input]));
 $queryTimeSec = round($result->getTime(), 3);

@@ -25,6 +25,10 @@ GRANT USAGE ON SCHEMA cryptostruct TO quicksight_readonly;
 GRANT SELECT ON ALL TABLES IN SCHEMA cryptostruct TO quicksight_readonly;
 ALTER DEFAULT PRIVILEGES IN SCHEMA cryptostruct GRANT SELECT ON TABLES TO quicksight_readonly;
 
+GRANT USAGE ON SCHEMA live TO quicksight_readonly;
+GRANT SELECT ON ALL TABLES IN SCHEMA live TO quicksight_readonly;
+ALTER DEFAULT PRIVILEGES IN SCHEMA live GRANT SELECT ON TABLES TO quicksight_readonly;
+
 GRANT USAGE ON SCHEMA alpha TO quicksight_readonly;
 GRANT SELECT ON ALL TABLES IN SCHEMA alpha TO quicksight_readonly;
 ALTER DEFAULT PRIVILEGES IN SCHEMA alpha GRANT SELECT ON TABLES TO quicksight_readonly;

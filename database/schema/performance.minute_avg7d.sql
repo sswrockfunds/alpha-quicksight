@@ -3,9 +3,13 @@ DROP TABLE IF EXISTS performance.minute_avg7d;
 
 CREATE TABLE performance.minute_avg7d
 (
-    ref_day            date,
-    ref_trading_minute timestamp(0),
-    time_of_day        time,
+    trading_month  VARCHAR(8),
+    trading_week   VARCHAR(8),
+    trading_day    DATE,
+    trading_hour   TIMESTAMP(0),
+    trading_minute TIMESTAMP(0),
+    time_of_day    TIME(0),
+
     trading_day_min    date,
     trading_day_max    date,
     trading_day_count  integer,
@@ -23,11 +27,11 @@ CREATE TABLE performance.minute_avg7d
     tpl300_avg7d_cum   numeric(20, 2),
     pnl_avg7d_cum      numeric(20, 2),
     updated_ts         timestamp(3),
-    PRIMARY KEY (ref_trading_minute, account_id)
+    PRIMARY KEY (trading_minute, account_id)
 );
 
-CREATE INDEX minute_avg7d_by_account_idx ON performance.minute_avg7d (ref_day, account_id, time_of_day);
-CREATE INDEX minute_avg7d_by_exchange_idx ON performance.minute_avg7d (ref_day, exchange_id, time_of_day);
+CREATE INDEX minute_avg7d_by_account_idx ON performance.minute_avg7d (trading_day, account_id, time_of_day);
+CREATE INDEX minute_avg7d_by_exchange_idx ON performance.minute_avg7d (trading_day, exchange_id, time_of_day);
 
 
 
