@@ -36,6 +36,11 @@ Log::info("Created Aggregate Minute data $day ($rowCount rows)");;
 Log::debug("$queryTimeSec sec");
 
 
+$input = <<<SQL
+    SELECT '$day'::date as "ref_day",
+           'quicksight|intraday' as "script_tag"
+SQL;
+
 // Intraday
 Log::info("Generate Intraday data for $day");;
 $result = MonkeyCluster::query(SQL::fromFile(__DIR__ . "/../sql/data/generate_intraday.sql", ['{script_input}' => $input]));
