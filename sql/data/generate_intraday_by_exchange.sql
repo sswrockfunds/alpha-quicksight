@@ -1,7 +1,8 @@
 with
 
 script_input as (
-        SELECT CURRENT_DATE as ref_day
+    {script_input}
+-- SELECT CURRENT_DATE as ref_day
 ),
 
 insert_data as (
