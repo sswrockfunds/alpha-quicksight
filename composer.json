@@ -16,7 +16,7 @@
     "minimum-stability": "beta",
     "require": {
         "php": "^8.4",
-        "sswrockfunds/core": "^0.16.0",
+        "sswrockfunds/core": "^0.16.1",
         "shuchkin/simplexlsx" : "1.1.13"
     },
     "scripts": {
