@@ -23,9 +23,7 @@ SQL;
 
 // DB Overload Protection
 MonkeyCluster::getActiveQueryCount('quicksight|fulltradingdata', 1);
-MonkeyCluster::isUnderLoad(30, 5);
-MonkeyCluster::checkDbPerformance();
-
+MonkeyCluster::checkPerformance(30, 5, true);
 Log::debug("\n$scriptInput");
 
 

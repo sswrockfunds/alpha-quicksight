@@ -27,7 +27,7 @@ Log::debug("\n$scriptInput");
 
 // DB Overload Protection
 MonkeyCluster::getActiveQueryCount('quicksight|tradingdata', 1);
-MonkeyCluster::checkDbPerformance();
+MonkeyCluster::checkPerformance();
 
 $sql = SQL::fromFile(
     filepath: __DIR__ . "/../sql/data/generate_tradingdata.sql",

@@ -23,7 +23,7 @@ SQL;
 // DB Overload Protection
 MonkeyCluster::getActiveQueryCount('quicksight|min', 1);
 MonkeyCluster::getActiveQueriesForUser(null, 50);
-MonkeyCluster::checkDbPerformance();
+MonkeyCluster::checkPerformance();
 
 Log::debug($input);
 Log::info("Aggregating Minute data for $day (avg7d, tradingdata, exposure)");;

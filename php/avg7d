@@ -28,8 +28,7 @@ Log::debug($input);
 
 // DB Overload Protection
 MonkeyCluster::getActiveQueryCount('quicksight|avg7d', 1);
-MonkeyCluster::isUnderLoad(90, 5);
-MonkeyCluster::checkDbPerformance();
+MonkeyCluster::checkPerformance(90, 5, true);
 
 Log::debug("Generating 7d avg for reference day $day");;
 $result = MonkeyCluster::query(SQL::fromFile(__DIR__ . "/../sql/data/generate_avg7d.sql", ['{script_input}' => $input]));

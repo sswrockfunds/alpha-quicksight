@@ -21,7 +21,7 @@ $fileMap = [
 
 foreach ($fileMap as $job => $file) {
     // DB Overload Protection
-    MonkeyCluster::checkDbPerformance();
+    MonkeyCluster::checkPerformance();
 
     $sql = SQL::fromFile( __DIR__ . "/../sql/" . $file);
 

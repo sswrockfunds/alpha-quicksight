@@ -34,8 +34,7 @@ SQL;
 
 // DB Overload Protection
 MonkeyCluster::getActiveQueryCount('quicksight|daily', 1);
-MonkeyCluster::isUnderLoad(90, 5);
-MonkeyCluster::checkDbPerformance();
+MonkeyCluster::checkPerformance(90, 5, true);
 
 // Exposure Data
 if($exposure) {
