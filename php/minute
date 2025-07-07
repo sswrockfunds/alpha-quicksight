@@ -17,15 +17,17 @@ $next = Time::generate($day, Time::MYSQL_DATE, '+1 day');
 $input = <<<SQL
     SELECT '$day'::TIMESTAMP(0) as "start_ts",
            '$next'::TIMESTAMP(0) as "end_ts",
+           '$day'::date as "ref_day",
            'quicksight|min' as "script_tag"
 SQL;
+Log::debug($input);
 
 // DB Overload Protection
 MonkeyCluster::getActiveQueryCount('quicksight|min', 1);
 MonkeyCluster::getActiveQueriesForUser(null, 50);
 MonkeyCluster::checkPerformance();
 
-Log::debug($input);
+// Minute aggregation
 Log::info("Aggregating Minute data for $day (avg7d, tradingdata, exposure)");;
 $result = MonkeyCluster::query(SQL::fromFile(__DIR__ . "/../sql/data/generate_minute.sql", ['{script_input}' => $input]));
 $queryTimeSec = round($result->getTime(), 3);
@@ -33,20 +35,16 @@ $rowCount = $result->getRowCount();
 Log::info("Created Aggregate Minute data $day ($rowCount rows)");;
 Log::debug("$queryTimeSec sec");
 
-// Script Definition
-$fileMap = [
-    "Intraday Performance" => "intraday/refresh_intraday.sql",
-    "Intraday Performance by Exchange" => "intraday/refresh_intraday_by_exchange.sql",
-    "Intraday Performance by Account" => "intraday/refresh_intraday_by_account.sql",
-];
 
-foreach ($fileMap as $job => $file) {
-    $sql = SQL::fromFile( __DIR__ . "/../sql/" . $file);
+// Intraday
+Log::info("Generate Intraday data for $day");;
+$result = MonkeyCluster::query(SQL::fromFile(__DIR__ . "/../sql/data/generate_intraday.sql", ['{script_input}' => $input]));
+$queryTimeSec = round($result->getTime(), 3);
+Log::debug("$queryTimeSec sec");
 
-    Log::info("Refreshing Materialized View: $job");
-    $result = MonkeyCluster::query($sql);
-    $queryTimeSec = round($result->getTime(), 3);
-    $rowCount = $result->getRowCount();
 
-    Log::debug("$queryTimeSec sec");
-}
+// Intraday by exchange
+Log::info("Generate Intraday by exchange for $day");;
+$result = MonkeyCluster::query(SQL::fromFile(__DIR__ . "/../sql/data/generate_intraday_by_exchange.sql", ['{script_input}' => $input]));
+$queryTimeSec = round($result->getTime(), 3);
+Log::debug("$queryTimeSec sec");

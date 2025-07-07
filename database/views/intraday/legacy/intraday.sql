@@ -8,8 +8,8 @@ SELECT trading_minute AS trading_ts,
        -- current_day
        sum(turnover) as turnover,
        sum(tpl1)     as tpl1,
-       sum(tpl60)    as tpl30,
-       sum(tpl300)   as tpl60,
+       sum(tpl60)    as tpl60,
+       sum(tpl300)   as tpl300,
        sum(pnl)      as pnl,
        -- current_day cummulated
        sum(turnover_cum) as turnover_cum,
