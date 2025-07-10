@@ -76,4 +76,4 @@ ON CONFLICT (trading_ts) DO UPDATE SET
     tpl60_avg7d_cum = EXCLUDED.tpl60_avg7d_cum,
     tpl300_avg7d_cum = EXCLUDED.tpl300_avg7d_cum,
     pnl_avg7d_cum = EXCLUDED.pnl_avg7d_cum
-WHERE i.turnover_cum != EXCLUDED.turnover_cum;
+WHERE i.turnover_cum != EXCLUDED.turnover_cum OR i.turnover_avg7d_cum IS NULL;
