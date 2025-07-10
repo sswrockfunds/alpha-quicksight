@@ -1,25 +1,37 @@
 #!/usr/bin/env php
 <?php
 
+use AlphaRock\Core\Cli\CliParser;
+use AlphaRock\Core\Common\Time;
 use AlphaRock\Core\Static\MonkeyCluster;
 use AlphaRock\Core\Static\Log;
 use AlphaRock\Core\Database\Query\SQL;
 
 require_once __DIR__ . "/src/alpha-quicksight.php";
 
+/** @var CliParser $Cli */
+$day = $Cli->getOption('day', Time::today());
+Time::toDate($day);
 
-// Script Definition
-$fileMap = [
-    "Pre Aggregate Average for last 7 Days" => "data/refresh_avg7d.sql",
-];
+$month = Time::generate($day, Time::ISO_MONTH);
+$week= Time::generate($day, Time::ISO_WEEK);
 
-foreach ($fileMap as $job => $file) {
-    $sql = SQL::fromFile(__DIR__ . "/../sql/" . $file);
 
-    Log::info("Refreshing Materialized View: $job");
-    $result = MonkeyCluster::query($sql);
-    $queryTimeSec = round($result->getTime(), 3);
-    $rowCount = $result->getRowCount();
+$input = <<<SQL
+     SELECT '$day'::date as "ref_day",
+     '$week' as "ref_week",
+     '$month' as "ref_month",
+     'quicksight|avg7d' as "script_tag"
+SQL;
 
-    Log::debug("$queryTimeSec sec");
-}
+Log::debug($input);
+
+// DB Overload Protection
+MonkeyCluster::getActiveQueryCount('quicksight|avg7d', 1);
+MonkeyCluster::checkPerformance(90, 5, true);
+
+Log::debug("Generating 7d avg for reference day $day");;
+$result = MonkeyCluster::query(SQL::fromFile(__DIR__ . "/../sql/data/generate_avg7d.sql", ['{script_input}' => $input]));
+$rowCount = $result->getRowCount();
+Log::debug("Created 7d avg for $day ($rowCount rows)");;
+

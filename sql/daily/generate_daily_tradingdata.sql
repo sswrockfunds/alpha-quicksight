@@ -39,7 +39,7 @@ with
                  account_id, updated_ts
     )
 
-INSERT INTO quicksight._history(
+INSERT INTO performance.daily(
   							trading_month, trading_week, trading_day,
   						  year_num, month_num, day_num,
   							account_id,

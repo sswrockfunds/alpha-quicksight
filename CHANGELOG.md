@@ -1,6 +1,21 @@
 ## [Unreleased]
 ### Added
+- Added view `quicksight.intraday_instruments` with data of all instruments traded in that day
+- Added Database Load checks `MonkeyCluster::checkPerformance()`
+  - Frequent queries won't start again if another instance is running
+    - `MonkeyCluster::getActiveQueryCount(pattern: 'quicksight|min', limit: 1)`
+  - Long running queries will wait if current database load is too high
+- Added intraday data of the last 7 day to the intraday views
 ### Changed
+- Move base data to schema `performance`
+  - `performance.minute` is filled from base tables
+    - `performance.minute_exposure`
+    - `performance.minute_tradingdata`
+    - `performance.minute_avg7d`
+  - `performance.daily`
+  - `performance.intraday`
+  - `performance.intraday_by_exchange`
+  - Tables are incrementally filled by sql jobs
 ### Fixed
 ### Removed
 ### -
@@ -10,7 +25,7 @@
 ### Added
 - Added view `quicksight.summary` with the latest state of the current day
 
-## [1.0.2] - 2025-06-20 11:51 UTC
+## [1.0.2] - 2025-06-20 09:51 UTC
 ### Changed
 - Updated dependencies
 ### Fixed
@@ -19,9 +34,6 @@
 - Fixed issue of duplication caused of updated_ts
 ### Removed
 ### -
-
-
-## [1.0.2] - 2025-06-20 09:51 UTC
 
 ## [1.0.1] - 2025-06-12 12:35 UTC
 ### Added

@@ -28,8 +28,13 @@ $timeRange = $start===$end ? $start : "$start to $end";
 $input = <<<SQL
     SELECT '$start'::timestamp as "start",
            '$end'::timestamp as "end",
-           '$cutOff'::timestamp as "cut_off"
+           '$cutOff'::timestamp as "cut_off",
+           'quicksight|daily' as "script_tag"
 SQL;
+
+// DB Overload Protection
+MonkeyCluster::getActiveQueryCount('quicksight|daily', 1);
+MonkeyCluster::checkPerformance(90, 5, true);
 
 // Exposure Data
 if($exposure) {

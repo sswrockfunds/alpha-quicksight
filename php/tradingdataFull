@@ -17,9 +17,13 @@ $scriptInput = <<<SQL
     SELECT CURRENT_TIMESTAMP::timestamp as "now",
            CURRENT_DATE::timestamp as "today",
            '$start'::timestamp as "start",
-           '$end'::timestamp as "end"
+           '$end'::timestamp as "end",
+           'quicksight|fulltradingdata' as "script_tag"
 SQL;
 
+// DB Overload Protection
+MonkeyCluster::getActiveQueryCount('quicksight|fulltradingdata', 1);
+MonkeyCluster::checkPerformance(30, 5, true);
 Log::debug("\n$scriptInput");
 
 

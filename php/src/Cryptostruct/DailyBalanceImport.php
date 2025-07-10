@@ -61,6 +61,8 @@ class DailyBalanceImport
                   AND latest.underlying_id=pu.underlying_id
                   AND latest.wallet=pu.wallet
                   AND latest.exposure=pu.exposure
+          WHERE abs(pu.margin_balance) > 0
+            AND pu.underlying_id > 0
         SQL;
 
         $sqlArchive = <<<SQL
@@ -116,7 +118,7 @@ class DailyBalanceImport
 
         foreach (array_chunk(array_values($insert), 5000) as $chunk) {
             MonkeyCluster::query(
-                "INSERT INTO quicksight._history",
+                "INSERT INTO performance.daily",
                 $chunk,
                 "ON CONFLICT(trading_day, account_id) DO UPDATE SET
                     exposure_usd = EXCLUDED.exposure_usd,

@@ -1,4 +1,5 @@
-UPDATE quicksight._history h
+-- Update the exchange data in daily performance stats
+UPDATE performance.daily h
 SET exchange_id = a.exchange_id
     FROM (
         SELECT account_id, exchange_id

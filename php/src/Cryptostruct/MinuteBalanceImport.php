@@ -100,7 +100,7 @@ class MinuteBalanceImport
 
         foreach (array_chunk(array_values($insert), 5000) as $chunk) {
             MonkeyCluster::query(
-                "INSERT INTO quicksight._exposure",
+                "INSERT INTO performance.minute_exposure",
                 $chunk,
                 "ON CONFLICT(trading_minute, account_id) DO UPDATE SET
                     balance_usd = EXCLUDED.balance_usd,

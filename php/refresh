@@ -10,14 +10,19 @@ require_once __DIR__ . "/src/alpha-quicksight.php";
 
 // Script Definition
 $fileMap = [
-    "Current Day Base data" => "data/refresh_current_day.sql",
-    "Intraday Performance" => "intraday/refresh_intraday.sql",
-    "Intraday Performance by Exchange" => "intraday/refresh_intraday_by_exchange.sql",
-    "Intraday Performance by Account" => "intraday/refresh_intraday_by_account.sql",
+   # "Current Day Base data" => "data/refresh_current_day.sql",
+    #"Intraday Performance" => "intraday/refresh_intraday.sql",
+    #"Intraday Performance by Exchange" => "intraday/refresh_intraday_by_exchange.sql",
+    #"Intraday Performance by Account" => "intraday/refresh_intraday_by_account.sql",
     "Intraday Top 100 Instruments" => "intraday/refresh_intraday_top_instruments.sql",
+    "Intraday All Instruments" => "intraday/refresh_intraday_instruments.sql",
+    "Account Summary" => "refresh_account_summary.sql",
 ];
 
 foreach ($fileMap as $job => $file) {
+    // DB Overload Protection
+    MonkeyCluster::checkPerformance();
+
     $sql = SQL::fromFile( __DIR__ . "/../sql/" . $file);
 
     Log::info("Refreshing Materialized View: $job");

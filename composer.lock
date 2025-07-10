@@ -4,15 +4,15 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "329301d2f9bd1394709fd08e9cd8a396",
+    "content-hash": "4bad2157954e7977b6944bfd8bf62519",
     "packages": [
         {
             "name": "cryptostruct/market-connectors",
-            "version": "3.20.4",
+            "version": "3.21.3",
             "source": {
                 "type": "git",
                 "url": "git@github.com:cryptostruct/market-connectors.git",
-                "reference": "f1a8d64d6eb67c4058c7bf59a85e0e1c4dacd8cf"
+                "reference": "5a5b0dccbb324d68cdc6b18627b7dd9ffe7b70b5"
             },
             "require": {
                 "ext-curl": "*",
@@ -72,7 +72,7 @@
             ],
             "description": "Market Connectors",
             "homepage": "https://cryptostruct.com",
-            "time": "2025-06-18T08:47:28+00:00"
+            "time": "2025-07-10T09:01:44+00:00"
         },
         {
             "name": "graylog2/gelf-php",
@@ -1303,11 +1303,11 @@
         },
         {
             "name": "sswrockfunds/core",
-            "version": "0.15.2",
+            "version": "0.16.1",
             "source": {
                 "type": "git",
                 "url": "git@github.com:sswrockfunds/core.git",
-                "reference": "93a72e201d408969b65ca7fa795514e66eefd9aa"
+                "reference": "a16a955a871da2efe1eb7d1ec868b2648368ed0e"
             },
             "require": {
                 "cryptostruct/market-connectors": "^3",
@@ -1362,7 +1362,7 @@
                 "proprietary"
             ],
             "description": "Shared Core Library for AlphaRock applications",
-            "time": "2025-06-11T20:07:01+00:00"
+            "time": "2025-07-07T14:56:43+00:00"
         },
         {
             "name": "stephenhill/base58",

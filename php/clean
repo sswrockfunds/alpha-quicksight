@@ -10,13 +10,22 @@ require_once __DIR__ . "/src/alpha-quicksight.php";
 // Script Definition
 $fileMap = [
     "Exposure Data" => "data/clean_exposure.sql",
-    "TradeData" => "data/clean_tradingdata.sql",
+    "TradeData"     => "data/clean_tradingdata.sql",
+    "7day Average"  => "data/clean_avg7d.sql",
+    "MinuteTable"   => "data/clean_minute.sql",
+    "Intraday"               => "data/clean_intraday.sql",
+    "Intraday by Exchange"   => "data/clean_intraday_by_exchange.sql",
 ];
 
+
+
 foreach ($fileMap as $job => $file) {
+    // DB Overload Protection
+    MonkeyCluster::checkPerformance(30, 3, true);
+
     $sql = SQL::fromFile( __DIR__ . "/../sql/" . $file);
 
-    Log::info("Deleting old entires: $job");
+    Log::info("Deleting old entries: $job");
     $result = MonkeyCluster::query($sql);
     $queryTimeSec = round($result->getTime(), 3);
     $rowCount = $result->getRowCount();
