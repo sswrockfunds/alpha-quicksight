@@ -5,6 +5,7 @@
   - Frequent queries won't start again if another instance is running
     - `MonkeyCluster::getActiveQueryCount(pattern: 'quicksight|min', limit: 1)`
   - Long running queries will wait if current database load is too high
+- Added intraday data of the last 7 day to the intraday views
 ### Changed
 - Move base data to schema `performance`
   - `performance.minute` is filled from base tables
