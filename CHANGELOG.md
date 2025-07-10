@@ -1,5 +1,13 @@
 ## [Unreleased]
 ### Added
+### Changed
+### Fixed
+### Removed
+### -
+
+
+## [1.1.0] - 2025-07-10 09:20 UTC
+### Added
 - Added view `quicksight.intraday_instruments` with data of all instruments traded in that day
 - Added Database Load checks `MonkeyCluster::checkPerformance()`
   - Frequent queries won't start again if another instance is running
@@ -16,10 +24,6 @@
   - `performance.intraday`
   - `performance.intraday_by_exchange`
   - Tables are incrementally filled by sql jobs
-### Fixed
-### Removed
-### -
-
 
 ## [1.0.3] - 2025-06-20 13:07 UTC
 ### Added
