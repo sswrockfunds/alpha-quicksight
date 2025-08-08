@@ -1,6 +1,8 @@
 ## [Unreleased]
 ### Added
 ### Changed
+- Updated dependencies
+  - sswrockfunds/core 0.16.2 => 0.16.3
 ### Fixed
 ### Removed
 ### -
