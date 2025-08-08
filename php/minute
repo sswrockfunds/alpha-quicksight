@@ -27,7 +27,7 @@ MonkeyCluster::getActiveQueryCount('quicksight|min', 1);
 MonkeyCluster::getActiveQueriesForUser(null, 50);
 MonkeyCluster::checkPerformance(
     thresholds:[
-            "connections" => 75,
+            "connections" => 100,
             "locks" => 6,
             "waits" => 20
         ]
