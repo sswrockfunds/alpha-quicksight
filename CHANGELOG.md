@@ -1,14 +1,17 @@
 ## [Unreleased]
 ### Added
 ### Changed
-- Updated dependencies
-  - sswrockfunds/core 0.16.2 => 0.16.3
-- Keep Intraday Data for 30 days instead of 7 days
-- Increased Load Thresholds for hourly tradingData and minute import
 ### Fixed
 ### Removed
 ### -
 
+
+## [1.1.1] - 2025-08-08 08:31 UTC
+### Changed
+- Updated dependencies
+  - sswrockfunds/core 0.16.2 => 0.16.3
+- Keep Intraday Data for 30 days instead of 7 days
+- Increased Load Thresholds for hourly tradingData and minute import
 
 ## [1.1.0] - 2025-07-10 09:20 UTC
 ### Added

@@ -1,4 +1,4 @@
-# AlphaQuickSight 1.1.0
+# AlphaQuickSight 1.1.1
 
 ## Open
 - No Transfers before 2023
