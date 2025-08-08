@@ -23,7 +23,11 @@ SQL;
 
 // DB Overload Protection
 MonkeyCluster::getActiveQueryCount('quicksight|fulltradingdata', 1);
-MonkeyCluster::checkPerformance(30, 5, true);
+MonkeyCluster::checkPerformance(30, 5, true,[
+    "connections" => 100,
+    "locks" => 10,
+    "waits" => 20
+]);
 Log::debug("\n$scriptInput");
 
 

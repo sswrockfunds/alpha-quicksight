@@ -25,7 +25,13 @@ Log::debug($input);
 // DB Overload Protection
 MonkeyCluster::getActiveQueryCount('quicksight|min', 1);
 MonkeyCluster::getActiveQueriesForUser(null, 50);
-MonkeyCluster::checkPerformance();
+MonkeyCluster::checkPerformance(
+    thresholds:[
+            "connections" => 100,
+            "locks" => 6,
+            "waits" => 20
+        ]
+);
 
 // Minute aggregation
 Log::info("Aggregating Minute data for $day (avg7d, tradingdata, exposure)");;
